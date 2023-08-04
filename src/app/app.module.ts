@@ -15,10 +15,11 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
   imports: [
     BrowserModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
+
     CoreModule,
     SharedModule,
     GestionTournoiModule,
-    BrowserAnimationsModule,
 
 
   ],
