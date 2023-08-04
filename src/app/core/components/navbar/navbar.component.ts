@@ -19,11 +19,13 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Accueil',
         icon: '/assets/img/home.png',
+        routerLink : '/'
 
       },
       {
         label: 'Tournois',
         icon: '/assets/img/trophy.png',
+        routerLink : '/tournoi-list',
         items: []
       },
 
