@@ -1,2 +1,80 @@
+@import "primeicons/primeicons.css";
+@import "/node_modules/primeflex/primeflex.css";
 @import "primeng/resources/primeng.css";
-@import "./assets/style/theme.css";
+@import "styles/theme.css";
+
+$dark : #1C3334;
+$pink : #DA7B93;
+$lightpink : #FFECF1;
+$white : #FFFFFF;
+
+
+html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  //background: rgb(28,51,52);
+  //background: linear-gradient(0deg, rgba(28,51,52,1) 0%, rgba(218,123,147,1) 100%);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+* {
+  list-style: none;
+  color : $white;
+}
+
+
+.container {
+  width: 50vw;
+  margin: 0 auto;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  margin: auto;
+}
+
+a {
+  text-decoration : none;
+  margin-bottom: 0;
+  &:hover{
+    color : $pink;
+    border-bottom : 1px solid $white;
+  }
+
+  &:active {
+    border-bottom : none;
+  }
+}
+
+.ml {
+  &-05{
+    margin-left : 0.5rem
+  }
+  &-1{
+    margin-left : 1rem
+  }
+  &-2{
+    margin-left : 2rem
+  }
+}
+
+.text {
+  &-large {
+    font-size: 1.5rem;
+  }
+}
+
+flex-center {
+  display : flex;
+  align-items: center;
+  justify-content: center;
+}

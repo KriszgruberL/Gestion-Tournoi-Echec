@@ -1,1 +1,37 @@
-<p>navbar works!</p>
+<div class="bg side">
+
+  <ul>
+    <li>
+        <span (click)="toggleSidebar()">
+        <img src="assets/img/arrow-right.png" alt="Ouvrir la barre de navigation">
+        </span>
+      <hr>
+    </li>
+    <li>
+      <a routerLink="/"><img src="assets/img/home.png" alt="Accueil"></a>
+      <hr>
+    </li>
+    <li >
+      <a routerLink="#"><img src="assets/img/trophy.png" alt="Tournois"></a>
+      <hr>
+    </li>
+  </ul>
+</div>
+
+
+<p-sidebar class=" no-border side-tg border-none" [(visible)]="sidebarVisible" position="left">
+  <ul>
+    <li>
+      <div>
+        <a routerLink="/" class="link">Accueil
+
+          <img src="assets/img/home.png" alt="Accueil">
+        </a>
+      </div>
+    </li>
+    <li>
+<!--      <a routerLink="{{link.url}}"> {{ link.name }} <img src="assets/img/{{link.img}}" alt=" {{ link.name }} "></a>-->
+    </li>
+  </ul>
+</p-sidebar>
+

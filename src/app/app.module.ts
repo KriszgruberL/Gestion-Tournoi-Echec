@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import {CoreModule} from "./core/core.module";
 import {SharedModule} from "./shared/shared.module";
 import {GestionTournoiModule} from "./gestion-tournoi/gestion-tournoi.module";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 @NgModule({
   declarations: [
@@ -17,6 +18,9 @@ import {GestionTournoiModule} from "./gestion-tournoi/gestion-tournoi.module";
     CoreModule,
     SharedModule,
     GestionTournoiModule,
+    BrowserAnimationsModule,
+
+
   ],
   providers: [],
   bootstrap: [AppComponent]

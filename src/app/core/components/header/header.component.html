@@ -1,0 +1,18 @@
+<header>
+  <div class="bg header">
+    <div>
+      <!--    <img src="assets/img/arrow-right.png" alt="Ouvrir le menu">-->
+    </div>
+    <div class="header-center">
+      <img src="assets/img/logo-blanc.png" alt="Logo">
+      <p class="text-large ml-1 ">CheckMate</p>
+    </div>
+    <div *ngIf="logged">
+      <img src="assets/img/user.png" alt="Profil">
+      <img src="assets/img/power-off.png" alt="Se déconnecter">
+    </div>
+    <div *ngIf="!logged">
+      <img src="assets/img/enter.png" alt="Se connecter">
+    </div>
+  </div>
+</header>
