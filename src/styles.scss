@@ -16,8 +16,8 @@ html, body {
 }
 
 body {
-  //background: rgb(28,51,52);
-  //background: linear-gradient(0deg, rgba(28,51,52,1) 0%, rgba(218,123,147,1) 100%);
+  background: rgb(28,51,52);
+  background: linear-gradient(0deg, rgba(28,51,52,1) 0%, rgba(218,123,147,1) 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
@@ -29,7 +29,7 @@ body {
 
 
 .container {
-  width: 50vw;
+  width: 80vw;
   margin: 0 auto;
 }
 
@@ -40,6 +40,8 @@ body {
   flex-direction: column;
 
   margin: auto;
+
+  background : blue;
 }
 
 a {

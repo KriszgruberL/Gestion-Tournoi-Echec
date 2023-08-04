@@ -1,7 +1,9 @@
 <header>
   <div class="bg header">
-    <div>
-      <!--    <img src="assets/img/arrow-right.png" alt="Ouvrir le menu">-->
+    <div class="link">
+     <span  (click)="toggleSidebar()">
+        <img src="assets/img/arrow-right.png" alt="Ouvrir la barre de navigation">
+        </span>
     </div>
     <div class="header-center">
       <img src="assets/img/logo-blanc.png" alt="Logo">
@@ -15,4 +17,20 @@
       <img src="assets/img/enter.png" alt="Se connecter">
     </div>
   </div>
+
+  <p-sidebar class=" no-border side-tg border-none" [(visible)]="sidebarVisible" position="left">
+    <ul>
+      <li>
+        <div>
+          <a routerLink="/" class="link">Accueil
+
+            <img src="assets/img/home.png" alt="Accueil">
+          </a>
+        </div>
+      </li>
+      <li>
+        <!--      <a routerLink="{{link.url}}"> {{ link.name }} <img src="assets/img/{{link.img}}" alt=" {{ link.name }} "></a>-->
+      </li>
+    </ul>
+  </p-sidebar>
 </header>
