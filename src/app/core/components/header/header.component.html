@@ -3,16 +3,16 @@
     <div class="link">
 
     </div>
-    <div class="header-center">
+    <div class="header-center select-none">
       <img src="assets/img/logo-blanc.png" alt="Logo">
-      <p class="text-large ml-1 ">CheckMate</p>
+      <p class="text-large ml-1 text-white-alpha-90">CheckMate</p>
     </div>
     <div *ngIf="logged">
-      <img src="assets/img/user.png" alt="Profil">
-      <img src="assets/img/power-off.png" alt="Se déconnecter">
+      <img src="assets/img/user.png" alt="Profil" title="Profil">
+      <img src="assets/img/power-off.png" alt="Se déconnecter" title="Se déconnecter">
     </div>
     <div *ngIf="!logged">
-      <img src="assets/img/enter.png" alt="Se connecter">
+      <a routerLink="/login"><img src="assets/img/enter.png" alt="Se connecter" title="Se connecter"></a>
     </div>
   </div>
 </header>

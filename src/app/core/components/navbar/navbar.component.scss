@@ -3,7 +3,10 @@ $pink: #DA7B93;
 $lightpink: #FFECF1;
 $white: #FFFFFF;
 
-
+nav {
+  top : 5.5rem;
+  width : 5vw;
+}
 .background {
   background: $dark;
 }
@@ -35,7 +38,6 @@ ul {
     div {
       width : 100%
     }
-
   }
 
   a {

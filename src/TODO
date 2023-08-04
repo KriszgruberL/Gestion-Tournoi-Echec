@@ -1,0 +1,3 @@
+Register page {
+            <p-password [(ngModel)]="login" [toggleMask]="true"></p-password>
+}

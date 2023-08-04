@@ -8,6 +8,11 @@ import {RouterLink} from "@angular/router";
 import { NavbarComponent } from './components/navbar/navbar.component';
 import {TabMenuModule} from "primeng/tabmenu";
 import {MegaMenuModule} from "primeng/megamenu";
+import { LoginComponent } from './components/login/login.component';
+import {FormsModule} from "@angular/forms";
+import {ChipsModule} from "primeng/chips";
+import {PasswordModule} from "primeng/password";
+import {RippleModule} from "primeng/ripple";
 
 
 
@@ -15,7 +20,8 @@ import {MegaMenuModule} from "primeng/megamenu";
   declarations: [
     HomeComponent,
     HeaderComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +29,11 @@ import {MegaMenuModule} from "primeng/megamenu";
     ButtonModule,
     RouterLink,
     TabMenuModule,
-    MegaMenuModule
+    MegaMenuModule,
+    FormsModule,
+    ChipsModule,
+    PasswordModule,
+    RippleModule
   ],
   exports: [
     HomeComponent,

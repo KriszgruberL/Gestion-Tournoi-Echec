@@ -24,16 +24,15 @@ body {
 
 * {
   list-style: none;
-  color : $white;
+  color : $dark;
 }
 
-
 .container {
-  width: 80vw;
-  margin: 0 auto;
+  margin-left : 5vw;
 }
 
 .main {
+  width: 80vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -45,14 +44,14 @@ body {
 a {
   text-decoration : none;
   margin-bottom: 0;
-  &:hover{
-    color : $pink;
-    border-bottom : 1px solid $white;
-  }
-
-  &:active {
-    border-bottom : none;
-  }
+  //&:hover{
+  //  color : $pink;
+  //  border-bottom : 1px solid $white;
+  //}
+  //
+  //&:active {
+  //  border-bottom : none;
+  //}
 }
 
 .ml {
@@ -85,3 +84,11 @@ a {
   }
 }
 
+input{
+  background: $pink;
+  width: 100%;
+
+  &:focus {
+    border : 2px solid $dark;
+  }
+}

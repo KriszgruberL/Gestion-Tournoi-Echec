@@ -1,31 +1,32 @@
-<nav class="absolute fixed background flex flex-grow-1">
-  <div class=" w-5rem flex align-content-center justify-content-center ">
-
+<!--  Icon bar  -->
+<nav class="absolute background flex bottom-0 ">
+  <div class="nav flex align-content-center justify-content-center">
     <ul>
-         <span (click)="toggleSidebar()">
-        <img class="" src="assets/img/arrow-right.png" alt="Ouvrir la barre de navigation">
-        </span>
-      <li>
-        <a routerLink="/"><img src="assets/img/home.png" alt="Accueil"></a>
-      </li>
-      <li>
-        <a routerLink="#"><img src="assets/img/trophy.png" alt="Tournois"></a>
+      <span (click)="toggleSidebar()">
+        <img class="select-none cursor-pointer" src="assets/img/arrow-right.png" alt="Ouvrir la barre de navigation">
+      </span>
+      <hr>
+      <li *ngFor="let item of items">
+        <a class="select-none " routerLink="{{item.routerLink}}">
+          <img src="{{item.icon}}" alt="{{item.label}}" title="{{item.label}}">
+        </a>
       </li>
     </ul>
   </div>
-
 </nav>
 
+<!--  Side bar -->
+
 <p-sidebar [(visible)]="sidebarVisible" position="left">
-  <div class="flex align-items-center justify-content-center">
-    <p-megaMenu class="m-auto p-element p-megamenu-root-list p-megamenu-vertical p.megamenu p-menu p-menuitem"
+  <div class="flex align-items-center justify-content-center ">
+    <p-megaMenu class="m-auto p-element p-megamenu-root-list p-megamenu-vertical p.megamenu p-menu p-menuitem "
                 orientation="vertical">
       <ng-container *ngFor="let item of items">
         <ul class="flex justify-content-center ">
           <a routerLink="{{item.routerLink}}">
             <li class="li flex ">
-              <div class=" flex align-items-center  justify-content-between">
-                <span>{{ item.label }}</span>
+              <div class=" flex align-items-center  justify-content-between ">
+                <span class="text-white-alpha-90">{{ item.label }}</span>
                 <img src="{{ item.icon }}" alt="{{ item.label }}">
               </div>
             </li>
@@ -34,16 +35,4 @@
       </ng-container>
     </p-megaMenu>
   </div>
-  <!--  <ul>-->
-  <!--    <li>-->
-  <!--      <div class="w-9 m-auto">-->
-  <!--&lt;!&ndash;        <a routerLink="/" class="flex justify-content-between align-items-center" > &ndash;&gt;-->
-  <!--&lt;!&ndash;          <img src="assets/img/home.png" alt="Accueil">&ndash;&gt;-->
-  <!--&lt;!&ndash;        </a>&ndash;&gt;-->
-
-  <!--&lt;!&ndash;        <a routerLink=" {{  }}" class="flex justify-content-between align-items-center"> {{ link.name }} <img src="assets/img/{{link.img}}" alt=" {{ link.name }} "></a>&ndash;&gt;-->
-
-  <!--      </div>-->
-  <!--    </li>-->
-  <!--  </ul>-->
 </p-sidebar>
