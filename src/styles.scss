@@ -3,10 +3,10 @@
 @import "primeng/resources/primeng.css";
 @import "styles/theme.css";
 
-$dark : #1C3334;
-$pink : #DA7B93;
-$lightpink : #FFECF1;
-$white : #FFFFFF;
+$dark: #1C3334;
+$pink: #DA7B93;
+$lightpink: #FFECF1;
+$white: #FFFFFF;
 
 
 html, body {
@@ -16,19 +16,19 @@ html, body {
 }
 
 body {
-  background: rgb(28,51,52);
-  background: linear-gradient(0deg, rgba(28,51,52,1) 0%, rgba(218,123,147,1) 100%);
+  background: rgb(28, 51, 52);
+  background: linear-gradient(0deg, rgba(28, 51, 52, 1) 0%, rgba(218, 123, 147, 1) 100%);
   background-repeat: no-repeat;
   background-attachment: fixed;
 }
 
 * {
   list-style: none;
-  color : $dark;
+  color: $dark;
 }
 
 .container {
-  margin-left : 5vw;
+  margin-left: 70px;
 }
 
 .main {
@@ -42,7 +42,7 @@ body {
 }
 
 a {
-  text-decoration : none;
+  text-decoration: none;
   margin-bottom: 0;
   //&:hover{
   //  color : $pink;
@@ -55,40 +55,44 @@ a {
 }
 
 .ml {
-  &-05{
-    margin-left : 0.5rem
+  &-05 {
+    margin-left: 0.5rem
   }
-  &-1{
-    margin-left : 1rem
+
+  &-1 {
+    margin-left: 1rem
   }
-  &-2{
-    margin-left : 2rem
+
+  &-2 {
+    margin-left: 2rem
   }
 }
 
 .mb {
   &-1 {
-    margin-bottom : 1rem
+    margin-bottom: 1rem
   }
 
-  .text {
+}
+
+.text {
   &-large {
     font-size: 1.5rem;
   }
+
 }
 
-  flex-center {
-    display : flex;
-    align-items: center;
-    justify-content: center;
-  }
+flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-input{
+input {
   background: $pink;
   width: 100%;
 
   &:focus {
-    border : 2px solid $dark;
+    border: 2px solid $dark;
   }
 }

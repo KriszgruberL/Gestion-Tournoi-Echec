@@ -25,8 +25,9 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Tournois',
         icon: '/assets/img/trophy.png',
-        routerLink : '/tournoi-list',
-        items: []
+        routerLink : '/gestion-tournoi/landing-page',
+        items: [
+        ]
       },
 
     ];
