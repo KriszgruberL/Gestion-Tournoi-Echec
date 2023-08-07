@@ -22,10 +22,10 @@ img {
 
 ul {
   background: $dark;
-  padding: 0.7rem;
+  padding: 1rem;
 
   .li {
-    padding: 0.3rem;
+    padding: 0.3rem 0.5rem;
     width: 15rem;
 
     &:hover {
@@ -48,35 +48,19 @@ ul {
 }
 
 :host ::ng-deep .p-sidebar {
-  border: none
+  border: none;
+  background : $dark;
 }
 
 :host ::ng-deep .p-megamenu.p-megamenu-vertical {
   width: 100%;
+  padding : 0;
 }
 
-:host ::ng-deep .p-megamenu-root-list {
-
-  margin: 0 auto; /* Center the menu horizontally */
-  background-color: $dark; /* Set the background color to dark */
-  border: none;
-}
-
-:host ::ng-deep .p-megamenu-root-list .p-menuitem-text {
-  color: $lightpink;
-  border: none;
-}
-
-/* Remove border from menu items */
 :host ::ng-deep .p-megamenu-root-list .p-menuitem, .p-menu {
   border: none;
   width: 100%
 }
 
-/* Add 1rem border radius on hover */
-:host ::ng-deep .p-megamenu-root-list .p-menuitem-link:hover {
-  border-radius: 0.5rem;
-  border: none;
-}
 
 

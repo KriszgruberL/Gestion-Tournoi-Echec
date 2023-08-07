@@ -1,4 +1,4 @@
-import {UserGender} from "./user";
+import {UserGender} from "../../shared/models/user";
 
 export interface Member {
   username: string

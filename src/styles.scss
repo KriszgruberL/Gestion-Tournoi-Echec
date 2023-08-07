@@ -1,7 +1,7 @@
 @import "primeicons/primeicons.css";
 @import "/node_modules/primeflex/primeflex.css";
 @import "primeng/resources/primeng.css";
-@import "styles/theme.css";
+@import "styles/theme-light.css";
 
 $dark: #1C3334;
 $pink: #DA7B93;
@@ -44,14 +44,6 @@ body {
 a {
   text-decoration: none;
   margin-bottom: 0;
-  //&:hover{
-  //  color : $pink;
-  //  border-bottom : 1px solid $white;
-  //}
-  //
-  //&:active {
-  //  border-bottom : none;
-  //}
 }
 
 .ml {
@@ -88,11 +80,9 @@ flex-center {
   justify-content: center;
 }
 
-input {
-  background: $pink;
-  width: 100%;
 
-  &:focus {
-    border: 2px solid $dark;
-  }
+.dot-line {
+  width: 90%;
+  margin: 0 auto 1rem;
+  padding: 0 1rem !important;
 }

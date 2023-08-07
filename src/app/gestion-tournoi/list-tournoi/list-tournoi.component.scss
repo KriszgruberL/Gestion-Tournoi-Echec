@@ -1,0 +1,28 @@
+$dark: #1C3334;
+$pink: #DA7B93;
+$dark-pink: #874d5c;
+$transparent-pink: rgba(218, 123, 147, 0.71);
+$lightpink: #FFECF1;
+$white: #FFFFFF;
+
+
+.scroll-bar {
+  width: 100%;
+  overflow: auto;
+  /* Hide the scrollbar by default */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scroll-bar::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb {
+  background-color: #da7b93;
+  border-radius: 6px;
+}
+
+.scroll-bar::-webkit-scrollbar-thumb:hover {
+  background-color: #ffecf1;
+}

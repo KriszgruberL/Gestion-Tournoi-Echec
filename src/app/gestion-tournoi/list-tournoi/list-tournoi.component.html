@@ -1,5 +1,35 @@
 <div class="container">
   <div class="main w-11 bg-white mb-2 p-3 border-round-lg">
-    <p> list-tournoi works!</p>
+    <div class="scroll-bar">
+    <p-table class=" p-datatable-responsive-stack" [value]="$tournois" [tableStyle]="{'min-width': '50rem'}">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of cols">{{ col.header }} </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-tournoi>
+        <tr >
+          <td>{{ tournoi.name }}</td>
+          <td>{{ tournoi.location }}</td>
+          <td>{{ tournoi.eloMin }} - {{ tournoi.eloMax }}</td>
+          <td>{{ tournoi.categories }}</td>
+          <td>{{ tournoi.status }}</td>
+          <td>{{ tournoi.endOfRegistrationDate | date : 'short' }}</td>
+          <td><span *ngIf="tournoi.womenOnly">✔️</span>
+            <span *ngIf="!tournoi.womenOnly">✖️</span> </td>
+          <td>{{ tournoi.minPlayers }} / {{tournoi.maxPlayers}}</td>
+
+          <td><a routerLink="/gestion-tournoi/detail-tournoi/{{tournoi.id}}"><p-button icon="pi pi-search" styleClass="p-button-rounded p-button-primary p-button-text p-button-raised"></p-button></a>
+          </td>
+
+        </tr>
+      </ng-template>
+    </p-table>
+    </div>
+
+    <div class="w-12 card flex justify-content-center">
+      <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="total" [rowsPerPageOptions]="[10, 20, 30]"></p-paginator>
+    </div>
   </div>
+
 </div>

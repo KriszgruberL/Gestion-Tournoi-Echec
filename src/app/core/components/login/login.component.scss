@@ -14,10 +14,24 @@ $white : #FFFFFF;
 
 img {
   width : 100%;
-  padding : 1.5rem;
+  padding : 2rem;
 }
 
 .right {
   width : 50%
 }
 
+:host ng::ng-deep input  {
+  width : 90%;
+}
+
+.login-img {
+  width : 50%;
+  background-color: $white;
+  border-left: 1px solid $pink;
+
+  .container-img {
+    background-color: $white;
+    width: 100%;
+  }
+}

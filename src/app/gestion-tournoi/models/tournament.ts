@@ -1,5 +1,5 @@
 import {Match} from "./match";
-import {UserDTO} from "../../core/models/user";
+import {UserDTO} from "../../shared/models/user";
 
 export enum TournamentCategory {
   Junior = "Junior",
@@ -13,17 +13,17 @@ export enum TournamentStatus {
 }
 export interface TournamentIndexDTO {
   total: number;
-  results: TournamentDTO[] | null;
+  results: TournamentDTO[];
 }
 export interface TournamentDTO {
   id: string;
   name: string;
-  location: string | null; // Nullable location
+  location: string; // Nullable location
   minPlayers: number;
   maxPlayers: number;
-  eloMin?: number | null; // Nullable eloMin
-  eloMax?: number | null; // Nullable eloMax
-  categories?: (TournamentCategory | null)[] | null; // Nullable categories
+  eloMin?: number; // Nullable eloMin
+  eloMax?: number; // Nullable eloMax
+  categories?: TournamentCategory[]; // Nullable categories
   womenOnly: boolean;
   endOfRegistrationDate: string;
   count: number;
@@ -35,12 +35,12 @@ export interface TournamentDTO {
 export interface TournamentDetailsDTO {
   id: string;
   name: string;
-  location?: string | null;
+  location?: string;
   minPlayers: number;
   maxPlayers: number;
-  eloMin?: number | null;
-  eloMax?: number | null;
-  categories?: (TournamentCategory | null)[] | null;
+  eloMin?: number;
+  eloMax?: number;
+  categories?: TournamentCategory[];
   womenOnly: boolean;
   endOfRegistrationDate: string;
   count: number;
@@ -48,8 +48,8 @@ export interface TournamentDetailsDTO {
   isRegistered: boolean;
   status: TournamentStatus;
   currentRound: number;
-  players?: (UserDTO | null)[] | null;
+  players?: UserDTO[];
   canStart: boolean;
   canValidateRound: boolean;
-  matches?: (Match | null)[] | null;
+  matches?: Match[];
 }

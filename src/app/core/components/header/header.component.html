@@ -7,11 +7,11 @@
       <img src="assets/img/logo-blanc.png" alt="Logo">
       <p class="text-large ml-1 text-white-alpha-90">CheckMate</p>
     </div>
-    <div *ngIf="logged">
-      <img src="assets/img/user.png" alt="Profil" title="Profil">
-      <img src="assets/img/power-off.png" alt="Se déconnecter" title="Se déconnecter">
+    <div *ngIf="isLogged">
+      <a routerLink="/working-on-it"><img src="assets/img/user.png" alt="Profil" title="Profil"></a>
+      <img (click)="onLogout()" src="assets/img/power-off.png" alt="Se déconnecter" title="Se déconnecter">
     </div>
-    <div *ngIf="!logged">
+    <div *ngIf="!isLogged">
       <a routerLink="/login"><img src="assets/img/enter.png" alt="Se connecter" title="Se connecter"></a>
     </div>
   </div>

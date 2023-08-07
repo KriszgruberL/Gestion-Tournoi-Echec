@@ -1,34 +1,43 @@
 <div class="container ">
   <div class="main w-8 pink mb-4 border-round-lg">
-    <div class="flex">
+    <div class="flex w-full ">
       <div class="pink flex flex-column flex-1 p-3 border-round-lg">
-        <h2 class="flex justify-content-center">Se connecter</h2>
+        <h2 class="p-4 ml-2 ">Se connecter</h2>
+        <img class="dot-line mb-2" src="assets/img/dot-line.png" alt="">
 
-        <form>
-
-          <div class="card flex justify-content-center">
-          <span class="p-float-label mb-4 ng-pristine ng-invalid ng-touched">
-              <input class="p-inputtext p-component p-element p-inputtext-sm " pInputText id="login"
-                     [(ngModel)]="login"/>
+        <form class="p-5" [formGroup]="loginForm" (submit)="onLogin()">
+          <div class="card ">
+          <span class="w-8  p-float-label mb-4 ng-pristine ng-invalid ng-touched">
+              <input class="w-full " pInputText id="login" formControlName="username"/>
               <label htmlFor="login">Login</label>
           </span>
           </div>
 
-          <div class="card flex justify-content-center">
-            <span class="p-float-label mb-3">
-                <input class=" p-inputtext p-component p-element p-inputtext-sm ng-pristine ng-invalid ng-touched"
-                       pInputText id="pwd" [(ngModel)]="login"/>
-                <label htmlFor="pwd">Password</label>
+          <div class="card ">
+             <span class="w-8 p-float-label mb-4">
+                <input
+                  class="w-full p-inputtext p-component p-element p-inputtext-sm ng-pristine ng-invalid ng-touched"
+                  pInputText id="password" formControlName="password"/>
+                <label htmlFor="password">Password</label>
             </span>
           </div>
-
-          <div class="card flex justify-content-center">
-            <p-button label="Se connecter" icon="pi pi-check" iconPos="right"></p-button>
+          <div class="card ">
+            <p-button type="submit" label="Se connecter" icon="pi pi-check" iconPos="right"></p-button>
           </div>
         </form>
+
+        <div class="flex justify-content-center">
+          <h3>OU</h3>
+        </div>
+        <div class="flex align-items-center justify-content-center">
+          <p-button  label="S'inscrire" icon="pi pi-user-plus" styleClass="p-button-success p-button-raised"></p-button>
+        </div>
+
       </div>
-      <div class=" flex justify-content-end flex-1 bg-white p-4 border-round-right-lg border-left-2  border-primary">
-        <img src="assets/img/undraw_authentication_re_svpt.svg">
+      <div class="login-img  border-round-right-lg border-left-2  border-primary">
+        <div class="container-img border-round-right-lg">
+          <img src="assets/img/undraw_authentication_re_svpt.svg">
+        </div>
       </div>
     </div>
 

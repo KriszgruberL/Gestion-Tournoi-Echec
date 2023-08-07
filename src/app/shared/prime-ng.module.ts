@@ -6,6 +6,11 @@ import { MegaMenuModule } from 'primeng/megamenu';
 import { ChipsModule } from 'primeng/chips';
 import { PasswordModule } from 'primeng/password';
 import { RippleModule } from 'primeng/ripple';
+import {CarouselModule} from "primeng/carousel";
+import {PaginatorModule} from "primeng/paginator";
+import {TableModule} from "primeng/table";
+import {FieldsetModule} from "primeng/fieldset";
+import {DividerModule} from "primeng/divider";
 
 @NgModule({
   exports: [
@@ -15,7 +20,12 @@ import { RippleModule } from 'primeng/ripple';
     MegaMenuModule,
     ChipsModule,
     PasswordModule,
-    RippleModule
+    RippleModule,
+    CarouselModule,
+    PaginatorModule,
+    TableModule,
+    FieldsetModule,
+    DividerModule,
   ]
 })
 export class PrimeNgModule {}
