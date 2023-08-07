@@ -1,6 +1,15 @@
 <div class="container">
-  <div class="main w-11 bg-white mb-2 p-3 border-round-lg">
-    <div class="scroll-bar">
+  <div class="main align-items-start w-11 bg-white mb-2 p-3 border-round-lg">
+
+    <div class=" p-2 m-2">
+      <p-button class="" icon="pi pi-filter" styleClass="p-button-rounded p-button-primary" (click)="toggleFilter()"></p-button>
+
+      <div *ngIf="filter">
+        <h2>ngfjfjfghjg</h2>
+      </div>
+    </div>
+
+    <div class="scroll-bar border-round-lg">
     <p-table class=" p-datatable-responsive-stack" [value]="$tournois" [tableStyle]="{'min-width': '50rem'}">
       <ng-template pTemplate="header" let-columns>
         <tr>

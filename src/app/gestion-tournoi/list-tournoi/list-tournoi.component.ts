@@ -27,6 +27,7 @@ export class ListTournoiComponent implements OnInit{
   $tournois! : TournamentDTO[];
   total: number = 0;
   cols!: Column[];
+  filter: boolean = false;
 
   constructor(private _tournoiService : TournoiService,
               private _http : HttpClient,
@@ -45,7 +46,6 @@ export class ListTournoiComponent implements OnInit{
     }
     );
 
-
     // * Dynamic columns --------------------------------------------
     this.cols = [
       { field: 'name', header: 'Name' },
@@ -60,12 +60,14 @@ export class ListTournoiComponent implements OnInit{
     ];
   }
 
+  toggleFilter(){
+    this.filter = !this.filter;
+  }
 
   // * Paginator --------------------------------------------
-
-
   first: number = 0;
   rows: number = 10;
+
 
   onPageChange(event: PaginatorState) {
     // @ts-ignore
