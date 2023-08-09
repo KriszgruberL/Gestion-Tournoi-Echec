@@ -5,7 +5,7 @@
         <h2 class="p-4 ml-2 ">Se connecter</h2>
         <img class="dot-line mb-2" src="assets/img/dot-line.png" alt="">
 
-        <form class="p-5" [formGroup]="loginForm" (submit)="onLogin()">
+        <form class="p-2" [formGroup]="loginForm" (submit)="onLogin()">
           <div class="card ">
           <span class="w-8  p-float-label mb-4 ng-pristine ng-invalid ng-touched">
               <input class="w-full " pInputText id="login" formControlName="username"/>
@@ -15,6 +15,7 @@
 
           <div class="card ">
              <span class="w-8 p-float-label mb-4">
+<!--                  type="password"-->
                 <input
                   class="w-full p-inputtext p-component p-element p-inputtext-sm ng-pristine ng-invalid ng-touched"
                   pInputText id="password" formControlName="password"/>
@@ -22,7 +23,7 @@
             </span>
           </div>
           <div class="card ">
-            <p-button type="submit" label="Se connecter" icon="pi pi-check" iconPos="right"></p-button>
+            <button type="submit" class="btn-dark">Se connecter <img class="btn-icon" src="assets/img/icons/cocher.png" alt=""></button>
           </div>
         </form>
 
@@ -30,7 +31,7 @@
           <h3>OU</h3>
         </div>
         <div class="flex align-items-center justify-content-center">
-          <p-button  label="S'inscrire" icon="pi pi-user-plus" styleClass="p-button-success p-button-raised"></p-button>
+          <button class="btn-medium" >S'inscrire <img class="btn-icon" src="assets/img/icons/ajouter-un-utilisateur.png" alt=""></button>
         </div>
 
       </div>

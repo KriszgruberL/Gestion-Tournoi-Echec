@@ -33,7 +33,8 @@
               "src/styles.scss",
               "src/styles/theme-light.css"
             ],
-            "scripts": []
+            "scripts": [
+            ]
           },
           "configurations": {
             "production": {

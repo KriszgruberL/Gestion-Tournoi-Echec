@@ -2,16 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {TournoiService} from "../services/tournoi.service";
 import {PaginatorState} from "primeng/paginator";
 import {HttpClient} from "@angular/common/http";
-import {TournamentDTO, TournamentIndexDTO} from "../models/tournament";
-import {Observable} from "rxjs";
+import {TournamentDTO} from "../models/tournament";
 import {Router} from "@angular/router";
+import {AuthService} from "../../shared/services/auth.service";
+import {MenuItem, MessageService} from "primeng/api";
 
-interface PageEvent {
-  first: number;
-  rows: number;
-  page: number;
-  pageCount: number;
-}
+
 interface Column {
   field: string;
   header: string;
@@ -22,45 +18,50 @@ interface Column {
   templateUrl: './list-tournoi.component.html',
   styleUrls: ['./list-tournoi.component.scss']
 })
-export class ListTournoiComponent implements OnInit{
 
-  $tournois! : TournamentDTO[];
+export class ListTournoiComponent implements OnInit {
+
+  $tournois!: TournamentDTO[];
   total: number = 0;
   cols!: Column[];
   filter: boolean = false;
+  admin: boolean = false;
 
-  constructor(private _tournoiService : TournoiService,
-              private _http : HttpClient,
-              private _router : Router) {
+  constructor(private _tournoiService: TournoiService,
+              private _http: HttpClient,
+              private _router: Router,
+              private _authService: AuthService,
+              private messageService: MessageService) {
   }
 
   ngOnInit() {
-  this._tournoiService.getAllTournoi().subscribe(
+    this._tournoiService.getAllTournoi().subscribe(
       (data) => {
         this.$tournois = data.results;
         this.total = data.total;
-        console.log("Received data:", this.$tournois);
       },
-    (error) => {
+      (error) => {
         console.error('Error fetching data:', error);
-    }
+      }
     );
+
+    this.admin = this._authService.isAdmin();
 
     // * Dynamic columns --------------------------------------------
     this.cols = [
-      { field: 'name', header: 'Name' },
-      { field: 'location', header: 'Location' },
-      { field: 'elo', header: 'Elo' },
-      { field: 'category', header: 'Category' },
-      { field: 'inventoryStatus', header: 'Status' },
-      { field: 'registerEnd', header: 'Fin des inscriptions' },
-      { field: 'women', header: 'Women Only' },
-      { field: 'player', header: 'Joueurs' },
-      { field: '', header: '' },
+      {field: 'name', header: 'Nom'},
+      {field: 'location', header: 'Localisation'},
+      {field: 'elo', header: 'Elo'},
+      {field: 'category', header: 'Catégorie'},
+      {field: 'inventoryStatus', header: 'Status'},
+      {field: 'registerEnd', header: 'Date limite'},
+      {field: 'women', header: 'Féminin'},
+      {field: 'player', header: 'Joueurs'},
+      {field: '', header: ''},
     ];
   }
 
-  toggleFilter(){
+  toggleFilter() {
     this.filter = !this.filter;
   }
 
@@ -68,12 +69,20 @@ export class ListTournoiComponent implements OnInit{
   first: number = 0;
   rows: number = 10;
 
-
   onPageChange(event: PaginatorState) {
     // @ts-ignore
     this.first = event.first;
     // @ts-ignore
     this.rows = event.rows;
   }
+
+  update() {
+    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Data Updated'});
+  }
+
+  delete() {
+    this.messageService.add({severity: 'warn', summary: 'Delete', detail: 'Data Deleted'});
+  }
+
 
 }

@@ -1,14 +1,15 @@
 <!--  Icon bar  -->
-<nav class="absolute background flex bottom-0 ">
+<nav class= " absolute background flex bottom-0 ">
   <div class="nav flex align-content-center justify-content-center">
     <ul>
-      <span (click)="toggleSidebar()">
-        <img class="select-none cursor-pointer" src="assets/img/arrow-right.png" alt="Ouvrir la barre de navigation">
-      </span>
-      <hr>
+      <li class="icon-hover" (click)="toggleSidebar()">
+        <img class="select-none cursor-pointer" src="../../../../assets/img/icons/arrow-right.png"
+             alt="Ouvrir la barre de navigation">
+      </li>
+      <hr class="mb-3">
       <li *ngFor="let item of items">
-        <a class="select-none " routerLink="{{item.routerLink}}">
-          <img src="{{item.icon}}" alt="{{item.label}}" title="{{item.label}}">
+        <a class="select-none" [routerLink]="item.routerLink">
+          <img src="{{item.icon}}" alt="{{item.label}}" title="{{item.label}} " >
         </a>
       </li>
     </ul>
@@ -22,17 +23,38 @@
     <p-megaMenu class="m-auto p-element p-megamenu-root-list p-megamenu-vertical p.megamenu p-menu p-menuitem "
                 orientation="vertical">
       <ng-container *ngFor="let item of items">
-        <ul class="flex justify-content-center ">
-          <a routerLink="{{item.routerLink}}">
+        <ul class="flex flex-column justify-content-center ">
+          <a routerLink="{{item.routerLink}}"  (click)="toggleVisible(item)">
             <li class="li flex ">
-              <div class=" flex align-items-center  justify-content-between ">
+              <div class=" flex align-items-center justify-content-between ">
                 <span class="text-white-alpha-90">{{ item.label }}</span>
                 <img src="{{ item.icon }}" alt="{{ item.label }}">
               </div>
             </li>
           </a>
+          <ul *ngIf="item.visible && item.items">
+            <hr>
+            <li class="li-child m-0 p-0" *ngFor="let childGroup of item.items">
+              <ul class=" m-0 p-0 ml-2 flex flex-column justify-content-center ">
+              <li class="li-child flex" *ngFor="let child of childGroup">
+                <a routerLink="{{child.routerLink}}"  (click)="toggleVisible(item)">
+                  <li class="li-hover">
+                <div class="flex align-items-center justify-content-between">
+                  <span class="text-white-alpha-90">{{ child.label }}</span>
+                  <img src="{{ child.icon }}" alt="{{ child.label }}">
+                </div>
+                  </li>
+                </a>
+              </li>
+            </ul>
+            </li>
+
+          </ul>
         </ul>
       </ng-container>
     </p-megaMenu>
   </div>
 </p-sidebar>
+
+
+

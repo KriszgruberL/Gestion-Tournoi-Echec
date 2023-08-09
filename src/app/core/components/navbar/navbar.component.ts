@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {MegaMenuItem} from "primeng/api";
 
-class Link {
-}
 
 @Component({
   selector: 'app-navbar',
@@ -11,29 +9,37 @@ class Link {
 })
 export class NavbarComponent implements OnInit {
 
-
   items: MegaMenuItem[] | undefined;
 
   ngOnInit() {
     this.items = [
       {
         label: 'Accueil',
-        icon: '/assets/img/home.png',
-        routerLink : '/'
+        icon: '/assets/img/icons/home.png',
+        routerLink: '/',
+        visible: false,
 
       },
       {
         label: 'Tournois',
-        icon: '/assets/img/trophy.png',
-        routerLink : '/gestion-tournoi/landing-page',
+        icon: '/assets/img/icons/trophy.png',
+        routerLink: '//gestion-tournoi/landing-page',
+        visible: false,
         items: [
+          [
+            {
+              label: 'Liste', icon: '/assets/img/icons/verifier.png', routerLink: '/gestion-tournoi/list-tournoi'
+            }
+          ]
         ]
       },
-
     ];
   }
 
-
+  toggleVisible(item: MegaMenuItem): void {
+    this.items?.forEach(i => i.visible = false)
+    item.visible = true;
+  }
 
   sidebarVisible: boolean = false;
 

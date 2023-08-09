@@ -12,6 +12,12 @@ import {TournoiService} from "./services/tournoi.service";
 import { DetailTournoiComponent } from './detail-tournoi/detail-tournoi.component';
 import {FieldsetModule} from "primeng/fieldset";
 import {DividerModule} from "primeng/divider";
+import {HttpClientModule} from "@angular/common/http";
+import {listResolver} from "./resolvers/list.resolver";
+import {ToastModule} from "primeng/toast";
+import {MenuModule} from "primeng/menu";
+import {MessageService} from "primeng/api";
+import {SlideMenuModule} from "primeng/slidemenu";
 
 
 
@@ -26,11 +32,16 @@ import {DividerModule} from "primeng/divider";
     GestionTournoiRoutingModule,
     SharedModule,
     PrimeNgModule,
+    HttpClientModule,
+    ToastModule,
+    MenuModule,
+    SlideMenuModule,
 
   ], exports : [
     ListTournoiComponent
   ], providers : [
     TournoiService,
+    MessageService
   ]
 })
 export class GestionTournoiModule { }

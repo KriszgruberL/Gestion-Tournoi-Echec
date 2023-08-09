@@ -1,18 +1,20 @@
 <header class="relative">
   <div class="bg header">
-    <div class="link">
-
+    <div >
+<!--      <p class="text-medium text-white-alpha-90 pl-4 ">Hi {{username | titlecase}} {{}}</p>-->
     </div>
     <div class="header-center select-none">
       <img src="assets/img/logo-blanc.png" alt="Logo">
       <p class="text-large ml-1 text-white-alpha-90">CheckMate</p>
     </div>
-    <div *ngIf="isLogged">
-      <a routerLink="/working-on-it"><img src="assets/img/user.png" alt="Profil" title="Profil"></a>
-      <img (click)="onLogout()" src="assets/img/power-off.png" alt="Se déconnecter" title="Se déconnecter">
-    </div>
-    <div *ngIf="!isLogged">
-      <a routerLink="/login"><img src="assets/img/enter.png" alt="Se connecter" title="Se connecter"></a>
+    <ul class="flex" *ngIf="isLogged">
+      <li class="icon-hover" ><a routerLink="/working-on-it"><img src="../../../../assets/img/icons/user.png" alt="Profil" title="Profil"></a></li>
+      <li class="icon-hover"><img (click)="onLogout()" src="../../../../assets/img/icons/power-off.png" alt="Se déconnecter" title="Se déconnecter"></li>
+
+    </ul>
+    <div class="icon-hover" *ngIf="!isLogged">
+      <li class="icon-hover"><a routerLink="/login"><img src="../../../../assets/img/icons/enter.png" alt="Se connecter" title="Se connecter"></a></li>
+
     </div>
   </div>
 </header>

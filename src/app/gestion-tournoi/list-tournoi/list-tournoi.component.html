@@ -2,43 +2,74 @@
   <div class="main align-items-start w-11 bg-white mb-2 p-3 border-round-lg">
 
     <div class=" p-2 m-2">
-      <p-button class="" icon="pi pi-filter" styleClass="p-button-rounded p-button-primary" (click)="toggleFilter()"></p-button>
+      <p-button icon="pi pi-filter" styleClass="p-button-rounded p-button-primary" (click)="toggleFilter()"></p-button>
 
       <div *ngIf="filter">
         <h2>ngfjfjfghjg</h2>
       </div>
     </div>
 
-    <div class="scroll-bar border-round-lg">
-    <p-table class=" p-datatable-responsive-stack" [value]="$tournois" [tableStyle]="{'min-width': '50rem'}">
-      <ng-template pTemplate="header" let-columns>
-        <tr>
-          <th *ngFor="let col of cols">{{ col.header }} </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-tournoi>
-        <tr >
-          <td>{{ tournoi.name }}</td>
-          <td>{{ tournoi.location }}</td>
-          <td>{{ tournoi.eloMin }} - {{ tournoi.eloMax }}</td>
-          <td>{{ tournoi.categories }}</td>
-          <td>{{ tournoi.status }}</td>
-          <td>{{ tournoi.endOfRegistrationDate | date : 'short' }}</td>
-          <td><span *ngIf="tournoi.womenOnly">✔️</span>
-            <span *ngIf="!tournoi.womenOnly">✖️</span> </td>
-          <td>{{ tournoi.minPlayers }} / {{tournoi.maxPlayers}}</td>
-
-          <td><a routerLink="/gestion-tournoi/detail-tournoi/{{tournoi.id}}"><p-button icon="pi pi-search" styleClass="p-button-rounded p-button-primary p-button-text p-button-raised"></p-button></a>
-          </td>
-
-        </tr>
-      </ng-template>
-    </p-table>
+    <div class="w-12 card flex justify-content-center">
+      <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+                   [totalRecords]="total"></p-paginator>
     </div>
 
+    <div class="scroll-bar border-round-lg flex justify-content-center align-items-center mb-2 mt-2">
+      <section class="layout">
+        <div *ngFor="let col of cols" class="header">{{ col.header }}</div>
+
+          <ng-container  *ngFor="let tournoi of $tournois">
+          <div class="grow1">{{ tournoi.name }}</div>
+          <div class="grow1">{{ tournoi.location }}</div>
+          <div class="grow1">{{ tournoi.eloMin }} - {{ tournoi.eloMax }}</div>
+          <div class="grow1">
+            <ul>
+              <li class="li" *ngFor="let cato of tournoi.categories">{{ cato }}</li>
+            </ul>
+          </div>
+          <div class="grow1">{{ tournoi.status }}</div>
+          <div class="grow1">{{ tournoi.endOfRegistrationDate | date : 'short' }}</div>
+          <div class="grow1">
+            <span *ngIf="tournoi.womenOnly">✔️</span>
+            <span *ngIf="!tournoi.womenOnly">✖️</span>
+          </div>
+          <div class="grow1">{{ tournoi.minPlayers }} / {{tournoi.maxPlayers}}</div>
+
+          <div class="grow1">
+            <ng-container *ngIf="admin">
+              <ul>
+                <li>
+                  <button class="add btn-medium"><img class="btn-icon" src="assets/img/icons/icone-plus.png"
+                                                  alt=""></button>
+                </li>
+                <li>
+                  <button class="edit btn-medium"><img class="btn-icon" src="assets/img/icons/editer.png"
+                                                  alt=""></button>
+                </li>
+                <li>
+                  <button class="delete btn-medium"><img class="btn-icon" src="assets/img/icons/poubelle-de-recyclage.png"
+                                                  alt=""></button>
+                </li>
+              </ul>
+            </ng-container>
+            <ng-container *ngIf="!admin">
+              <a routerLink="/gestion-tournoi/detail-tournoi/{{tournoi.id}}">
+                <p-button icon="pi pi-search"
+                          styleClass="p-button-rounded p-button-primary p-button-text p-button-raised"></p-button>
+              </a>
+            </ng-container>
+          </div>
+
+    </ng-container>
+      </section>
+    </div>
     <div class="w-12 card flex justify-content-center">
-      <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows" [totalRecords]="total" [rowsPerPageOptions]="[10, 20, 30]"></p-paginator>
+      <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+                   [totalRecords]="total"></p-paginator>
     </div>
   </div>
 
+
+
 </div>
+

@@ -1,14 +1,16 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../shared/services/auth.service";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+
+
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
 
   loginForm: FormGroup;
 
@@ -20,6 +22,9 @@ export class LoginComponent {
       username: [null, [Validators.required]],
       password: [null, [Validators.required]]
     })
+  }
+
+  ngOnInit(): void {
 
   }
 
@@ -36,4 +41,6 @@ export class LoginComponent {
       this.loginForm.markAllAsTouched();
     }
   }
+
+
 }
