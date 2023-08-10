@@ -50,6 +50,15 @@ body {
   margin: 1.5rem auto 2rem;
 }
 
+.option {
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+
+    display: flex;
+    align-items: center;
+
+}
+
 a {
   text-decoration: none;
   margin-bottom: 0;
@@ -82,13 +91,13 @@ a {
   }
 
   &-medium {
-    font-size : 1.2rem;
+    font-size: 1.2rem;
   }
 
 }
 
-ul{
-  padding : 0;
+ul {
+  padding: 0;
 }
 
 flex-center {
@@ -105,7 +114,7 @@ flex-center {
 }
 
 .btn {
-  margin: 0.5rem 0.5rem 0.5rem 0;
+  margin: 0.5rem;
   padding: 0.5rem 1rem;
   border-radius: 0.7rem 0.7rem 0;
   border: none;
@@ -116,10 +125,10 @@ flex-center {
   align-items: stretch;
   justify-content: space-evenly;
 
-  box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.5);
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
 
   &:active {
-    box-shadow: inset -1px -1px 2px 0px rgba(0,0,0,0.5);
+    box-shadow: inset -1px -1px 2px 0px rgba(0, 0, 0, 0.5);
   }
 
   .btn-icon {
@@ -142,13 +151,14 @@ flex-center {
     @extend .btn;
     color: $dark;
     background: $pink;
-    border : thin solid  $pink;
+    border: thin solid $pink;
 
     &:hover {
       background: $lightpink;
-      border : thin solid $dark;
+      border: thin solid $dark;
     }
   }
+
   &-light {
     @extend .btn;
     color: $dark;

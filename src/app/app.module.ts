@@ -6,6 +6,9 @@ import { CoreModule } from './core/core.module';
 import { GestionTournoiModule } from './gestion-tournoi/gestion-tournoi.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
+import {MessageService} from "primeng/api";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {JwtInterceptor} from "./shared/interceptors/jwt.interceptor";
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,11 +16,12 @@ import { SharedModule } from './shared/shared.module';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    
+
     CoreModule,
     SharedModule,
   ],
-  providers: [],
+  providers: [MessageService,
+    { provide : HTTP_INTERCEPTORS, useClass : JwtInterceptor, multi : true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

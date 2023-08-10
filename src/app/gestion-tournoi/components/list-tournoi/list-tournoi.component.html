@@ -1,13 +1,17 @@
 <div class="container">
   <div class="main align-items-start w-11 bg-white p-3 border-round-lg">
 
-    <div class=" p-2 m-2">
+    <div class="option">
+      <button class="btn-medium" routerLink="/gestion-tournoi/add-tournoi">Ajouter<img class="btn-icon ml-2" src="../../../../assets/img/icons/icone-plus.png"></button>
+    </div>
+
+    <div class="option ">
       <p-button icon="pi pi-filter" styleClass="p-button-rounded p-button-primary" (click)="toggleFilter()"></p-button>
 
+    </div>
       <div *ngIf="filter">
         <h2>ngfjfjfghjg</h2>
       </div>
-    </div>
 
     <div class="w-12 card flex justify-content-center">
       <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
@@ -30,8 +34,8 @@
           <div class="grow1">{{ tournoi.status }}</div>
           <div class="grow1">{{ tournoi.endOfRegistrationDate | date : 'short' }}</div>
           <div class="grow1">
-            <span *ngIf="tournoi.womenOnly"><img src="assets/img/icons/tick-mark-pink.png">️</span>
-            <span *ngIf="!tournoi.womenOnly"><img src="assets/img/icons/remove-pink.png">️️</span>
+            <span *ngIf="tournoi.womenOnly"><img src="../../../../assets/img/icons/tick-mark-pink.png">️</span>
+            <span *ngIf="!tournoi.womenOnly"><img src="../../../../assets/img/icons/remove-pink.png">️️</span>
           </div>
           <div class="grow1">{{ tournoi.minPlayers }} / {{tournoi.maxPlayers}}</div>
 
@@ -39,16 +43,16 @@
             <ng-container *ngIf="admin">
               <ul>
                 <li>
-                  <button class="add btn-medium"><img class="btn-icon" src="assets/img/icons/icone-plus.png"
+                  <button class="add btn-medium"><img class="btn-icon" src="../../../../assets/img/icons/icone-plus.png"
                                                   alt=""></button>
                 </li>
                 <li>
-                  <button class="edit btn-medium"><img class="btn-icon" src="assets/img/icons/editer.png"
+                  <button class="edit btn-medium"><img class="btn-icon" src="../../../../assets/img/icons/editer.png"
                                                   alt=""></button>
                 </li>
                 <li>
-                  <button class="delete btn-medium"><img class="btn-icon" src="assets/img/icons/poubelle-de-recyclage.png"
-                                                  alt=""></button>
+                  <button class="delete btn-medium" (click)="deleteTournoi( tournoi.id  )"><img class="btn-icon" src="../../../../assets/img/icons/poubelle-de-recyclage.png"
+                                                         alt=""></button>
                 </li>
               </ul>
             </ng-container>

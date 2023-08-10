@@ -7,23 +7,28 @@
 
         <form class="p-2" [formGroup]="loginForm" (submit)="onLogin()">
           <div class="card ">
-          <span class="w-8  p-float-label mb-4 ng-pristine ng-invalid ng-touched">
+          <span class="w-8  p-float-label mb-4 ">
               <input class="w-full " pInputText id="login" formControlName="username"/>
               <label htmlFor="login">Login</label>
           </span>
           </div>
 
           <div class="card ">
-             <span class="w-8 p-float-label mb-4">
+             <span class="w-8 p-float-label mb-2">
 <!--                  type="password"-->
                 <input
-                  class="w-full p-inputtext p-component p-element p-inputtext-sm ng-pristine ng-invalid ng-touched"
+                  class=" w-full p-inputtext p-component p-element p-inputtext-sm"
                   pInputText id="password" formControlName="password"/>
-                <label htmlFor="password">Password</label>
+                <label htmlFor="password">Mot de passe</label>
             </span>
           </div>
+
+          <small class="ml-2 p-error font-bold text-red-600" *ngIf=" errorMessage">
+            {{errorMessage}}</small>
+
           <div class="card ">
-            <button type="submit" class="btn-dark">Se connecter <img class="btn-icon" src="assets/img/icons/cocher.png" alt=""></button>
+            <button type="submit" class="btn-dark">Se connecter <img class="btn-icon" src="assets/img/icons/cocher.png"
+                                                                     alt=""></button>
           </div>
         </form>
 
@@ -31,7 +36,8 @@
           <h3>OU</h3>
         </div>
         <div class="flex align-items-center justify-content-center">
-          <button class="btn-medium" >S'inscrire <img class="btn-icon" src="assets/img/icons/ajouter-un-utilisateur.png" alt=""></button>
+          <button class="btn-medium">S'inscrire <img class="btn-icon" src="assets/img/icons/ajouter-un-utilisateur.png"
+                                                     alt=""></button>
         </div>
 
       </div>

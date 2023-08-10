@@ -21,7 +21,6 @@ export class AuthService {
 
   login(username: string, password: string): Observable<TokenDTO> {
     return this._http.post<TokenDTO>(`${this._urlAPI}/login`, {username, password}).pipe(
-      tap(() => this.setLogged(true)),
       tap((response: TokenDTO) => {
         this.connectedUser = response
       })
@@ -32,10 +31,11 @@ export class AuthService {
 
   get connectedUser(): TokenDTO | undefined {
     const authString = localStorage.getItem(this.AUTH_KEY)
-    if (authString)
+    if (authString) {
       return JSON.parse(authString) as TokenDTO
-    else
+    } else {
       return undefined
+    }
   }
 
   set connectedUser(value: TokenDTO | undefined) {
@@ -51,12 +51,20 @@ export class AuthService {
     return this._$auth.value?.user.role === 'Admin'
   }
 
-  get token() {
+  get token$() {
     return this._$auth.pipe(map(auth => auth?.token))
   }
 
   get username(): Observable<string | undefined> {
     return this._$auth.pipe(map(auth => auth?.user.username))
+  }
+
+  get isConnected() {
+    return !!this.connectedUser
+  }
+
+  get token(){
+    return this.connectedUser?.token
   }
 
   set username(value: string) {
@@ -71,14 +79,14 @@ export class AuthService {
     return this._$isLogged.asObservable();
   }
 
-  setLogged(value: boolean): void {
+  set $isLogged(value: boolean){
     this._$isLogged.next(value);
   }
 
   logout(): void {
     this.connectedUser = undefined
     localStorage.removeItem('AUTH_KEY')
-    this.setLogged(false)
+    this.$isLogged = false;
 
     this._router.navigateByUrl('/home')
   }

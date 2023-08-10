@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../shared/services/auth.service";
+import {tap} from "rxjs";
 
 
 @Component({
@@ -7,26 +8,23 @@ import {AuthService} from "../../../shared/services/auth.service";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent{
   isLogged = false;
-  // username! : string;
 
   constructor(private _authService : AuthService) {
-  }
+    let temp = localStorage.getItem('userConnected');
 
-  ngOnInit(): void {
-    // this._authService.username.subscribe(username => this.username = username);
-
-    this._authService.$isLogged.subscribe(isLogged => {
-      this.isLogged = isLogged
-    } )
+    if(temp){
+      this._authService.$isLogged.pipe(
+        tap(() => this.isLogged = true)
+      ).subscribe();
+    }
   }
 
 
   onLogout() {
     this._authService.logout();
     this.isLogged = false;
-    // this.username = ''
   }
 
 }

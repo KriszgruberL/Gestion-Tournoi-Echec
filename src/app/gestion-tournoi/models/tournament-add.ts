@@ -1,12 +1,12 @@
 import {TournamentCategory} from "./tournament";
 
-interface TournamentAddDTO {
+export interface TournamentAddDTO {
   name: string;
-  location?: string | null; // Nullable location
+  location?: string ; // Nullable location
   minPlayers: number;
   maxPlayers: number;
-  eloMin?: number | null; // Nullable eloMin
-  eloMax?: number | null; // Nullable eloMax
+  eloMin?: number |null; // Nullable eloMin
+  eloMax?:  |null; // Nullable eloMax
   categories: TournamentCategory[];
   womenOnly: boolean;
   endOfRegistrationDate: string;

@@ -2,11 +2,11 @@ import {Component, OnInit} from '@angular/core';
 
 import {PaginatorState} from "primeng/paginator";
 import {HttpClient} from "@angular/common/http";
-import {TournamentDTO} from "../models/tournament";
+import {TournamentDTO} from "../../models/tournament";
 import {Router} from "@angular/router";
-import {AuthService} from "../../shared/services/auth.service";
+import {AuthService} from "../../../shared/services/auth.service";
 import {MenuItem, MessageService} from "primeng/api";
-import {TournoiService} from "../services/tournoi.service";
+import {TournoiService} from "../../services/tournoi.service";
 
 
 interface Column {
@@ -51,7 +51,7 @@ export class ListTournoiComponent implements OnInit {
     // * Dynamic columns --------------------------------------------
     this.cols = [
       {field: 'name', header: 'Nom'},
-      {field: 'location', header: 'Localisation'},
+      {field: 'location', header: 'Lieu'},
       {field: 'elo', header: 'Elo'},
       {field: 'category', header: 'Catégorie'},
       {field: 'inventoryStatus', header: 'Status'},
@@ -77,13 +77,20 @@ export class ListTournoiComponent implements OnInit {
     this.rows = event.rows;
   }
 
-  update() {
-    this.messageService.add({severity: 'success', summary: 'Success', detail: 'Data Updated'});
+  deleteTournoi(id : string){
+    this._tournoiService.deleteTournoi(id).subscribe(
+    );
   }
 
-  delete() {
-    this.messageService.add({severity: 'warn', summary: 'Delete', detail: 'Data Deleted'});
-  }
+
+  // update() {
+  //   this.messageService.add({severity: 'success', summary: 'Success', detail: 'Data Updated'});
+  // }
+  //
+  // delete() {
+  //   this.messageService.add({severity: 'warn', summary: 'Delete', detail: 'Data Deleted'});
+  // }
+
 
 
 }

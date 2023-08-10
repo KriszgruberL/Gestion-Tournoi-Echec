@@ -27,9 +27,8 @@ export class NavbarComponent implements OnInit {
         visible: false,
         items: [
           [
-            {
-              label: 'Liste', icon: '/assets/img/icons/verifier.png', routerLink: '/gestion-tournoi/list-tournoi'
-            }
+            { label: 'Liste', icon: '/assets/img/icons/verifier.png', routerLink: '/gestion-tournoi/list-tournoi' },
+            { label: 'Ajouter', icon: '/assets/img/icons/icone-plus.png', routerLink: '/gestion-tournoi/add-tournoi' },
           ]
         ]
       },

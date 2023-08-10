@@ -1,0 +1,46 @@
+$dark: #1C3334;
+$pink: #DA7B93;
+$lightpink: #FFECF1;
+$white: #FFFFFF;
+
+
+hr {
+  border: none;
+  border-bottom: 1px solid $pink;
+  margin: 1rem auto 2rem;
+}
+
+:host ::ng-deep p-multiSelect {
+  width: 100% !important;
+
+}
+:host ::ng-deep .p-element .p-multiselect  {
+  width: 100% !important;
+}
+
+input {
+  background : $pink;
+}
+
+
+.bg-pink {
+  background : $lightpink !important;
+}
+
+.add-input {
+  width: 70% !important;
+  margin: 0rem 1rem 2rem;
+}
+
+.add-number {
+  width: 60% !important;
+  margin: 0rem 1rem 2rem;
+}
+
+.add-text {
+  width: 100%;
+}
+
+.number {
+  width: 100%;
+}

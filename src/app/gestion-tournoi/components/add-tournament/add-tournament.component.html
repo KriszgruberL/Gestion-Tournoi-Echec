@@ -1,0 +1,71 @@
+
+<div class="container">
+  <div class="main w-11 bg-white mb-2 p-3 border-round-lg">
+    <form (submit)="onSubmit()" [formGroup]="addForm">
+
+      <div class="flex align-items-center mb-5 flex-column">
+        <span class="add-input p-float-label mt-3">
+            <input class="add-text" id="name" pInputText  formControlName='name'/>
+            <label htmlFor="name">Nom du Tournoi</label>
+        </span>
+
+        <span class="add-input p-float-label">
+            <input class="add-text" id="location" pInputText formControlName='location' />
+            <label htmlFor="location">Lieu</label>
+        </span>
+
+        <div class="add-number flex flex-row align-items-center justify-content-center">
+          <span class=" p-float-label">
+              <input class="number" id="elo-min" pInputText
+                     pKeyFilter="int" formControlName="eloMin"/>
+              <label htmlFor="elo-min">Elo minimum</label>
+          </span>
+          <span> <img alt src="assets/img/icons/slash.png"> </span>
+          <span class="p-float-label">
+              <input class="number" id="elo-max" pInputText
+                     pKeyFilter="int"formControlName="eloMax"/>
+              <label htmlFor="elo-max">Elo maximum</label>
+          </span>
+        </div>
+        <!--        <small class="mt-2" id="username-help">Enter your username to reset your password.</small>-->
+
+        <div class="add-number flex flex-row align-items-center justify-content-center">
+          <span class="p-float-label">
+              <input class="number" id="players-min" pInputText
+                     pKeyFilter="int" formControlName="minPlayers"/>
+              <label htmlFor="players-min">Joueurs minimum</label>
+          </span>
+          <span> <img alt src="assets/img/icons/slash.png"> </span>
+          <span class="p-float-label">
+              <input class="number" id="players-max" pInputText
+                     pKeyFilter="int" formControlName="maxPlayers"/>
+              <label htmlFor="players-max">Joueurs maximum</label>
+          </span>
+        </div>
+
+          <span class="add-input p-float-label">
+            <p-multiSelect  id="categorie" [options]="categories" formControlName="categories" optionLabel="name">
+            </p-multiSelect>
+            <label for="categorie">Choisissez une catégorie</label>
+        </span>
+
+        <div class="add-input flex justify-content-center">
+          <p-calendar dateFormat="dd-mm-yy" [minDate]="minDate"  [readonlyInput]="true" [showIcon]="true" formControlName='endOfRegistrationDate'></p-calendar>
+        </div>
+
+
+        <div class="card">
+            <p-checkbox formControlName="womenOnly"  id="wo" [binary]="true" inputId="binary"></p-checkbox>
+            <label class="ml-2" for="wo">Réserver aux femmes</label>
+        </div>
+
+        <div class="flex align-items-center justify-content-center m-3">
+          <button class="btn-medium" type="submit" >Inscrire le tournoi <img class="btn-icon" src="assets/img/icons/ajouter-un-utilisateur.png" alt=""></button>
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+
