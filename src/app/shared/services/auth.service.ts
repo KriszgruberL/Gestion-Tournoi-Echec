@@ -12,50 +12,74 @@ export class AuthService {
 
   private _urlAPI = 'https://khun.somee.com/api'
   private _$isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private _token: string | null = ''
-  private _$username: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  private _$auth: BehaviorSubject<TokenDTO | undefined> = new BehaviorSubject<TokenDTO | undefined>(this.connectedUser);
+
 
   constructor(private _http: HttpClient,
               private _router: Router) {
   }
 
-
   login(username: string, password: string): Observable<TokenDTO> {
     return this._http.post<TokenDTO>(`${this._urlAPI}/login`, {username, password}).pipe(
       tap(() => this.setLogged(true)),
       tap((response: TokenDTO) => {
-        this._token = response.token
-        this.setUsername((response.user.username))
-        if (this._token){
-          localStorage.setItem('userRole', response.user.role)
-        }
+        this.connectedUser = response
       })
     )
   }
 
-  isAdmin(): boolean{
-    return  localStorage.getItem(('userRole')) === 'Admin';
+  readonly AUTH_KEY = 'userConnected'
+
+  get connectedUser(): TokenDTO | undefined {
+    const authString = localStorage.getItem(this.AUTH_KEY)
+    if (authString)
+      return JSON.parse(authString) as TokenDTO
+    else
+      return undefined
+  }
+
+  set connectedUser(value: TokenDTO | undefined) {
+    if (value)
+      localStorage.setItem(this.AUTH_KEY, JSON.stringify(value))
+    else
+      localStorage.removeItem(this.AUTH_KEY)
+
+    this._$auth.next(this.connectedUser)
+  }
+
+  isAdmin(): boolean  {
+    return this._$auth.value?.user.role === 'Admin'
+  }
+
+  get token() {
+    return this._$auth.pipe(map(auth => auth?.token))
+  }
+
+  get username(): Observable<string | undefined> {
+    return this._$auth.pipe(map(auth => auth?.user.username))
+  }
+
+  set username(value: string) {
+    const currentAuth = this._$auth.value;
+
+    if (currentAuth) {
+      currentAuth.user.username = value;
+      this._$auth.next(currentAuth);
+    }
+  }
+  get $isLogged(): Observable<boolean> {
+    return this._$isLogged.asObservable();
   }
 
   setLogged(value: boolean): void {
     this._$isLogged.next(value);
   }
 
-  setUsername(value : string){
-    this._$username.next(value)
-  }
-
-  get username() : Observable<string>{
-    return this._$username
-  }
-
-  get $isLogged(): Observable<boolean> {
-    return this._$isLogged.asObservable();
-  }
-
   logout(): void {
-    this._token = '';
+    this.connectedUser = undefined
+    localStorage.removeItem('AUTH_KEY')
     this.setLogged(false)
+
     this._router.navigateByUrl('/home')
   }
 }

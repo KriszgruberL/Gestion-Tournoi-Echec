@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {TournoiService} from "../services/tournoi.service";
+
 import {PaginatorState} from "primeng/paginator";
 import {HttpClient} from "@angular/common/http";
 import {TournamentDTO} from "../models/tournament";
 import {Router} from "@angular/router";
 import {AuthService} from "../../shared/services/auth.service";
 import {MenuItem, MessageService} from "primeng/api";
+import {TournoiService} from "../services/tournoi.service";
 
 
 interface Column {
