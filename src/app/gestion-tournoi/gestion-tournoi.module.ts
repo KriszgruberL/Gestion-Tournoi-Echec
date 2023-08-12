@@ -18,6 +18,8 @@ import {MultiSelectModule} from "primeng/multiselect";
 import {CalendarModule} from "primeng/calendar";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {CheckboxModule} from "primeng/checkbox";
+import { MatchTournoiComponent } from './components/match-tournoi/match-tournoi.component';
+import {StepsModule} from "primeng/steps";
 
 
 @NgModule({
@@ -25,7 +27,8 @@ import {CheckboxModule} from "primeng/checkbox";
     ListTournoiComponent,
     LandingPageComponent,
     DetailTournoiComponent,
-    AddTournamentComponent
+    AddTournamentComponent,
+    MatchTournoiComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +40,7 @@ import {CheckboxModule} from "primeng/checkbox";
     CalendarModule,
     SelectButtonModule,
     CheckboxModule,
+    StepsModule,
 
   ], exports : [
     ListTournoiComponent

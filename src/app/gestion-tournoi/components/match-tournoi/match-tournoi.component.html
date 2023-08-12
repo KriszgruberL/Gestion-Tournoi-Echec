@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="main w-10  mb-2  border-round-lg">
+        <div class="p-card w-12 p-2 ">
+            <p-toast></p-toast>
+            <p-steps [model]="items" [readonly]="false" [activeIndex]="activeIndex"
+                     (activeIndexChange)="onActiveIndexChange($event)"></p-steps>
+        </div>
+    </div>
+
+    <div class="main w-10">
+        <section class="outer-layout m-2 border-round-lg ">
+            <div class="w-12 mb-2 mr-3 p-3 border-round-lg bg-white">
+
+                <div class="layout ">
+                    <div *ngFor="let col of cols" class="header">{{ col.header }}</div>
+
+                    <ng-container *ngIf="$round | async as round">
+
+
+                        <ng-container *ngFor="let r of round" >
+                            <div class="grow1">1</div>
+                            <div class="grow1">{{ r.whiteName | titlecase}}</div>
+                            <div class="grow1">{{ set1.totalPlayed }}</div>
+                            <div class="grow1"> {{ set1.victoryCount }} </div>
+                            <div class="grow1"> {{ set1.defeatCount }} </div>
+                            <div class="grow1"> {{ set1.drawCount }} </div>
+                            <div class="grow1"> {{ r.result === 'WhiteWin' ? 1 : 0}} </div>
+                            <div class="grow1">2</div>
+                            <div class="grow1">{{ r.blackName | titlecase}}</div>
+                            <div class="grow1">{{ set2.totalPlayed }}</div>
+                            <div class="grow1"> {{ set2.victoryCount }} </div>
+                            <div class="grow1"> {{ set2.defeatCount }} </div>
+                            <div class="grow1"> {{ set2.drawCount }} </div>
+                            <div class="grow1"> {{ r.result === 'WhiteWin' ? 1 : 0}} </div>
+                        </ng-container>
+                    </ng-container>
+                </div>
+            </div>
+
+            <div class="w-9 mb-2 p-3 border-round-lg bg-white">
+                <ng-container *ngIf="$round | async as round">
+                    <div class="result text-center text-2xl " *ngFor="let r of round ">
+                        {{ r.whiteName | titlecase}} VS {{ r.blackName |titlecase}} - <span>{{getResults(r.result)}}</span>
+                    </div>
+                </ng-container>
+            </div>
+
+        </section>
+    </div>
+</div>
+
+
+
+
+

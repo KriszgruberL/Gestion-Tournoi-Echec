@@ -5,11 +5,13 @@ import {LandingPageComponent} from "./landing-page/landing-page.component";
 import {DetailTournoiComponent} from "./components/detail-tournoi/detail-tournoi.component";
 import {listResolver} from "./resolvers/list.resolver";
 import {AddTournamentComponent} from "./components/add-tournament/add-tournament.component";
+import {MatchTournoiComponent} from "./components/match-tournoi/match-tournoi.component";
 
 
 const routes: Routes = [
   { path: 'list-tournoi', component: ListTournoiComponent , resolve : { lists : listResolver}},
   { path: 'detail-tournoi/:id', component: DetailTournoiComponent },
+  { path: 'match-tournoi/:id', component: MatchTournoiComponent },
   { path: 'add-tournoi', component: AddTournamentComponent },
   { path: 'landing-page', component: LandingPageComponent },
 ];
