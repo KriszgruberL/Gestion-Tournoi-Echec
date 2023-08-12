@@ -21,7 +21,7 @@ export class TournoiService {
 
   addTournoi(addForm : TournamentAddDTO) : Observable<TournamentAddDTO>{
     return this._http.post<TournamentAddDTO>(`${this._urlTournament}`, addForm).pipe(
-      tap( () => (`TournoiService : ${console.log(addForm.name)})`))
+        tap( () => (`TournoiService : ${console.log(addForm.name)})`))
     )
   }
 

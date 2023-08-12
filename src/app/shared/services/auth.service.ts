@@ -47,9 +47,11 @@ export class AuthService {
     this._$auth.next(this.connectedUser)
   }
 
-  isAdmin(): boolean  {
-    return this._$auth.value?.user.role === 'Admin'
+  $isAdmin() {
+    // return this._$auth.value?.user.role === 'Admin'
+    return this._$auth.pipe(map(auth => auth?.user.role))
   }
+
 
   get token$() {
     return this._$auth.pipe(map(auth => auth?.token))

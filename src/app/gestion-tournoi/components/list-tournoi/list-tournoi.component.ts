@@ -7,6 +7,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../../shared/services/auth.service";
 import {MenuItem, MessageService} from "primeng/api";
 import {TournoiService} from "../../services/tournoi.service";
+import {tap} from "rxjs";
 
 
 interface Column {
@@ -33,6 +34,14 @@ export class ListTournoiComponent implements OnInit {
               private _router: Router,
               private _authService: AuthService,
               private messageService: MessageService) {
+
+    let temp = localStorage.getItem('userConnected');
+
+    if (temp) {
+      this._authService.$isAdmin().pipe(
+        tap(() => this.admin = true)
+      ).subscribe();
+    }
   }
 
   ngOnInit() {
@@ -45,9 +54,6 @@ export class ListTournoiComponent implements OnInit {
         console.error('Error fetching data:', error);
       }
     );
-
-    this.admin = this._authService.isAdmin();
-
     // * Dynamic columns --------------------------------------------
     this.cols = [
       {field: 'name', header: 'Nom'},
@@ -77,9 +83,9 @@ export class ListTournoiComponent implements OnInit {
     this.rows = event.rows;
   }
 
-  deleteTournoi(id : string){
-    this._tournoiService.deleteTournoi(id).subscribe(
-    );
+  deleteTournoi(id: string) {
+    this._tournoiService.deleteTournoi(id).subscribe();
+    this._router.navigateByUrl("/")
   }
 
 
@@ -90,7 +96,6 @@ export class ListTournoiComponent implements OnInit {
   // delete() {
   //   this.messageService.add({severity: 'warn', summary: 'Delete', detail: 'Data Deleted'});
   // }
-
 
 
 }
