@@ -1,68 +1,160 @@
-
-<div class="container ">
+<div class="container">
+  <div class="main w-8  mb-4 p-3 border-round-lg">
+    <div class="flex w-full">
+      <button class="btn-dark flex justify-content-start" routerLink="/gestion-tournoi/list-tournoi">Retour à la liste des tournois</button>
+    </div>
+  </div>
   <div class="main w-8 bg-white mb-4 p-2 border-round-lg">
     <form (submit)="onSubmit()" [formGroup]="addForm">
-
       <div class="flex align-items-center mb-5 flex-column">
         <span class="add-input p-float-label mt-3">
-            <input class="add-text" id="name" pInputText  formControlName='name'/>
-            <label htmlFor="name">Nom du Tournoi</label>
+          <input
+            class="add-text mt-1"
+            id="name"
+            pInputText
+            formControlName="name"/>
+          <label class="text-medium mb-4" htmlFor="name">
+            Nom du Tournoi<span class="required">*</span>
+          </label>
+        </span>
+        <span
+          class="error"
+          *ngIf="
+            addForm.get('name')?.touched &&
+            addForm.get('name')?.errors?.['required']">
+          Ce champs est requis
         </span>
 
         <span class="add-input p-float-label">
-            <input class="add-text" id="location" pInputText formControlName='location' />
-            <label htmlFor="location">Lieu</label>
+          <input
+            class="add-text"
+            id="location"
+            pInputText
+            formControlName="location"/>
+          <label class="text-medium mb-4" htmlFor="location">Lieu</label>
         </span>
 
-        <div class="add-number flex flex-row align-items-center justify-content-center">
-          <span class=" p-float-label">
-              <input class="number" id="elo-min" pInputText
-                     pKeyFilter="int" formControlName="eloMin"/>
-              <label htmlFor="elo-min">Elo minimum</label>
-          </span>
-          <span> <img alt src="assets/img/icons/slash.png"> </span>
+        <div class="mb-2 add-number flex flex-row align-items-center justify-content-center">
           <span class="p-float-label">
-              <input class="number" id="elo-max" pInputText
-                     pKeyFilter="int"formControlName="eloMax"/>
-              <label htmlFor="elo-max">Elo maximum</label>
+            <input
+              class="number"
+              id="elo-min"
+              pInputText
+              pKeyFilter="int"
+              formControlName="eloMin"/>
+            <label class="text-medium mb-4" htmlFor="elo-min">Elo minimum (0-3000)</label>
+          </span>
+
+          <span> <img alt src="assets/img/icons/slash.png"/> </span>
+          <span class="p-float-label">
+            <input
+              class="number"
+              id="elo-max"
+              pInputText
+              pKeyFilter="int"
+              formControlName="eloMax"/>
+            <label class="text-medium mb-4" htmlFor="elo-max">Elo maximum (0-3000)</label>
           </span>
         </div>
-        <!--        <small class="mt-2" id="username-help">Enter your username to reset your password.</small>-->
-
-        <div class="add-number flex flex-row align-items-center justify-content-center">
-          <span class="p-float-label">
-              <input class="number" id="players-min" pInputText
-                     pKeyFilter="int" formControlName="minPlayers"/>
-              <label htmlFor="players-min">Joueurs minimum</label>
-          </span>
-          <span> <img alt src="assets/img/icons/slash.png"> </span>
-          <span class="p-float-label">
-              <input class="number" id="players-max" pInputText
-                     pKeyFilter="int" formControlName="maxPlayers"/>
-              <label htmlFor="players-max">Joueurs maximum</label>
-          </span>
+        <div *ngIf=" addForm.get('eloMax')?.dirty && addForm.get('eloMin')?.dirty && addForm.hasError('invalidNumber')" class="error">
+          L'ELO maximum doit être supérieur au minimum
         </div>
 
-        <span class="add-input p-float-label">
-            <p-multiSelect  id="categorie" [options]="categories" formControlName="categories" optionLabel="name">
-            </p-multiSelect>
-            <label for="categorie">Choisissez une catégorie</label>
+
+        <div class="add-number flex flex-row align-items-center justify-content-center mb-2 mt-4">
+          <div class="flex-column">
+            <span class="p-float-label">
+              <input
+                class="number"
+                id="players-min"
+                pInputText
+                pKeyFilter="int"
+                formControlName="minPlayers"/>
+              <label class="text-medium mb-4" htmlFor="players-min">
+                Joueurs minimum (2)<span class="required">*</span>
+              </label>
+            </span>
+            <span class="error" *ngIf="
+                addForm.get('minPlayers')?.touched &&
+                addForm.get('minPlayers')?.errors?.['required']
+              ">Ce champ est requis
+            </span>
+            <span class="error" *ngIf="
+                addForm.get('minPlayers')?.errors?.['min'] ||
+                addForm.get('minPlayers')?.errors?.['max']">
+              Nombre de joueurs invalide
+            </span>
+          </div>
+          <span> <img alt src="assets/img/icons/slash.png"/> </span>
+          <div class="flex-column">
+            <span class="p-float-label">
+              <input
+                class="number"
+                id="players-max"
+                pInputText
+                pKeyFilter="int"
+                formControlName="maxPlayers"/>
+              <label class="text-medium mb-4" htmlFor="players-max">Joueurs maximum (16)<span class="required">*</span></label>
+            </span>
+            <span class="error"
+              *ngIf="
+                addForm.get('maxPlayers')?.touched &&
+                addForm.get('maxPlayers')?.errors?.['required']" >
+              Ce champ est requis
+            </span>
+
+            <span class="error"
+                  *ngIf="
+                addForm.get('maxPlayers')?.errors?.['min'] ||
+                addForm.get('maxPlayers')?.errors?.['max']">
+              Nombre de joueurs invalide
+            </span>
+          </div>
+        </div>
+        <div *ngIf=" addForm.get('maxPlayers')?.dirty && addForm.get('minPlayers')?.dirty && addForm.hasError('invalidNumber')" class="error">
+            Le nombre joueur maximum doit être supérieur au minimum
+        </div>
+
+        <span class="mt-4 add-input p-float-label">
+          <p-multiSelect
+            id="categorie"
+            [options]="categories"
+            formControlName="categories"
+            optionLabel="name">
+          </p-multiSelect>
+          <label class="text-medium mb-4" for="categorie">Choisissez une catégorie<span
+            class="required">*</span></label>
+        </span>
+        <span class="error"
+              *ngIf="addForm.get('categories')?.touched && addForm.get('categories')?.errors?.['required']">
+          Ce champ est requis
         </span>
 
-        <div class="add-input flex justify-content-center">
-          <p-calendar dateFormat="dd-mm-yy" [minDate]="minDate"  [readonlyInput]="true" [showIcon]="true" formControlName='endOfRegistrationDate'></p-calendar>
+        <div class="add-input flex flex-column align-items-center justify-content-center">
+          <label class="text-medium">Date de fin des inscriptions<span class="required">*</span></label>
+          <p-calendar
+            class="text-medium mb-2 p-1"
+            placeholder="dd-mm-yyyy"
+            dateFormat="dd-mm-yy"
+            [minDate]="minDate"
+            [readonlyInput]="true"
+            [showIcon]="true"
+            formControlName="endOfRegistrationDate"></p-calendar>
+
+          <span class="error"
+                *ngIf="addForm.get('endOfRegistrationDate')?.touched &&addForm.get('endOfRegistrationDate')?.errors?.['required']">Ce champ est requis</span>
         </div>
 
-
-        <div class="card">
-          <p-checkbox formControlName="womenOnly"  id="wo" [binary]="true" inputId="binary"></p-checkbox>
-          <label class="ml-2" for="wo">Réserver aux femmes</label>
+        <div class="card flex align-items-center">
+          <p-inputSwitch formControlName="womenOnly" id="wo"></p-inputSwitch>
+          <label class="ml-2 text-xl" for="wo">Réserver aux femmes</label>
         </div>
 
         <div class="flex align-items-center justify-content-center m-3">
-          <button class="btn-medium" type="submit" >Inscrire le tournoi <img class="btn-icon" src="assets/img/icons/ajouter-un-utilisateur.png" alt=""></button>
+          <button class="btn-medium " type="submit">
+            Inscrire le tournoi<img class="btn-icon" src="assets/img/icons/ajouter-un-utilisateur.png" alt=""/>
+          </button>
         </div>
-
       </div>
     </form>
   </div>

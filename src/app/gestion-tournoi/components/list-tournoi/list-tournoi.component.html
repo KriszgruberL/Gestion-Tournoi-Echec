@@ -46,7 +46,7 @@
             </ul>
           </div>
           <div class="grow1">{{ tournoi.status }}</div>
-          <div class="grow1">{{ tournoi.endOfRegistrationDate | date : 'short' }}</div>
+          <div class="grow1">{{ tournoi.endOfRegistrationDate |date : 'dd/MM/yyyy' }}</div>
           <div class="grow1">
             <span *ngIf="tournoi.womenOnly"><img src="../../../../assets/img/icons/tick-mark-pink.png">️</span>
             <span *ngIf="!tournoi.womenOnly"><img src="../../../../assets/img/icons/remove-pink.png">️️</span>
@@ -57,17 +57,17 @@
             <ng-container *ngIf="admin">
               <ul>
                 <li>
-                  <button class="add btn-medium" routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
+                  <button class="add btn" routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
                     <img class="btn-icon" src="assets/img/icons/loupe-noir.png" alt="">
                   </button>
                 </li>
                 <li>
-                  <button class="edit btn-medium" routerLink="/gestion-tournoi/detail-tournoi/{{tournoi.id}}">
+                  <button class="edit btn" routerLink="/gestion-tournoi/edit-tournoi/{{tournoi.id}}">
                     <img class="btn-icon" src="../../../../assets/img/icons/editer.png" alt="">
                   </button>
                 </li>
                 <li>
-                  <button class="delete btn-medium" (click)="deleteTournoi( tournoi.id  )">
+                  <button class="delete btn" (click)="deleteTournoi( tournoi.id  )">
                     <img class="btn-icon" src="../../../../assets/img/icons/poubelle-de-recyclage.png" alt="">
                   </button>
                 </li>

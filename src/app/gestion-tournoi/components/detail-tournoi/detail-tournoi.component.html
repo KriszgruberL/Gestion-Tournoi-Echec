@@ -1,6 +1,8 @@
 <div class="container">
   <div class="main w-10 bg-white mb-2 p-3 border-round-lg">
     <div *ngIf=" $tournoi | async as tournoi">
+
+
       <p-fieldset class="w-6 " legend="Tournoi">
         <ul>
           <li>ID : {{tournoi.id}}</li>
@@ -37,7 +39,7 @@
           <li>Possible de démarrer : {{tournoi.canStart ? '✔️' : '✖️'}}</li>
           <li>Possible de valider le tour : {{tournoi.canValidateRound ? '✔️' : '✖️'}}</li>
         </p-fieldset>
-        <p-fieldset class="m-1 "  legend="Liste des matchs" [toggleable]="true">
+        <p-fieldset class="m-1 " legend="Liste des matchs" [toggleable]="true">
           <ul *ngFor="let matches of tournoi.matches">
             <li>ID : {{matches.id}}</li>
             <li>ID du tournoi : {{matches.tournamentId}}</li>
@@ -49,7 +51,8 @@
             <li>Tour : {{matches.round}}</li>
             <p-divider></p-divider>
           </ul>
-        </p-fieldset></div>
+        </p-fieldset>
+      </div>
     </div>
   </div>
 </div>

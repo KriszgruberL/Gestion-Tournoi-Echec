@@ -1,0 +1,209 @@
+<div class="container">
+
+  <div class="main w-10  mb-4 p-3 border-round-lg">
+    <div class="flex w-full">
+      <button class="btn-dark flex justify-content-start" routerLink="/gestion-tournoi/list-tournoi">Retour à la liste des tournois</button>
+    </div>
+  </div>
+  <div class="main w-10 bg-white mb-4 p-3 border-round-lg">
+
+    <div class="p-4" *ngIf=" tournoiDetail">
+      <div class="flex align-items-start justify-content-center w-12">
+        <form (submit)="onEdit()" [formGroup]="editForm">
+          <div class="flex align-items-center mb-5 flex-column">
+        <span class="add-input p-float-label mt-3">
+          <input
+            class="add-text mt-1"
+            id="name"
+            pInputText
+            formControlName="name"/>
+          <label class="text-medium mb-4" htmlFor="name">
+            Nom du Tournoi<span class="required">*</span>
+          </label>
+        </span>
+            <span
+              class="error"
+              *ngIf="
+            editForm.get('name')?.touched &&
+            editForm.get('name')?.errors?.['required']">
+          Ce champs est requis
+        </span>
+
+            <span class="add-input p-float-label">
+          <input
+            class="add-text"
+            id="location"
+            pInputText
+            formControlName="location"/>
+          <label class="text-medium mb-4" htmlFor="location">Lieu</label>
+        </span>
+
+            <div class="mb-2 add-number flex flex-row align-items-center justify-content-center">
+          <span class="p-float-label">
+            <input
+              class="number"
+              id="elo-min"
+              pInputText
+              pKeyFilter="int"
+              formControlName="eloMin"/>
+            <label class="text-medium mb-4" htmlFor="elo-min">Elo minimum (0-3000)</label>
+          </span>
+
+              <span> <img alt src="assets/img/icons/slash.png"/> </span>
+              <span class="p-float-label">
+            <input
+              class="number"
+              id="elo-max"
+              pInputText
+              pKeyFilter="int"
+              formControlName="eloMax"/>
+            <label class="text-medium mb-4" htmlFor="elo-max">Elo maximum (0-3000)</label>
+          </span>
+            </div>
+            <div *ngIf=" editForm.get('eloMax')?.dirty && editForm.get('eloMin')?.dirty && editForm.hasError('invalidNumber')" class="error">
+              L'ELO maximum doit être supérieur au minimum
+            </div>
+
+            <div class="add-number flex flex-row align-items-center justify-content-center mb-2 mt-4">
+              <div class="flex-column">
+            <span class="p-float-label">
+              <input
+                class="number"
+                id="players-min"
+                pInputText
+                pKeyFilter="int"
+                formControlName="minPlayers"/>
+              <label class="text-medium mb-4" htmlFor="players-min">
+                Joueurs minimum (2)<span class="required">*</span>
+              </label>
+            </span>
+                <span class="error" *ngIf="
+                editForm.get('minPlayers')?.touched &&
+                editForm.get('minPlayers')?.errors?.['required']
+              ">Ce champ est requis
+            </span>
+                <span class="error" *ngIf="
+                editForm.get('minPlayers')?.errors?.['min'] ||
+                editForm.get('minPlayers')?.errors?.['max']">
+              Nombre de joueurs invalide
+            </span>
+              </div>
+              <span> <img alt src="assets/img/icons/slash.png"/> </span>
+              <div class="flex-column">
+            <span class="p-float-label">
+              <input
+                class="number"
+                id="players-max"
+                pInputText
+                pKeyFilter="int"
+                formControlName="maxPlayers"/>
+              <label class="text-medium mb-4" htmlFor="players-max">Joueurs maximum (16)<span class="required">*</span></label>
+            </span>
+                <span class="error"
+                      *ngIf="
+                editForm.get('maxPlayers')?.touched &&
+                editForm.get('maxPlayers')?.errors?.['required']" >
+              Ce champ est requis
+            </span>
+
+                <span class="error"
+                      *ngIf="
+                editForm.get('maxPlayers')?.errors?.['min'] ||
+                editForm.get('maxPlayers')?.errors?.['max']">
+              Nombre de joueurs invalide
+            </span>
+              </div>
+            </div>
+            <div *ngIf=" (editForm.get('maxPlayers')?.dirty || editForm.get('minPlayers')?.dirty) && editForm.hasError('invalidNumber')" class="error">
+              Le nombre joueur maximum doit être supérieur au minimum
+            </div>
+
+            <span class="mt-4 add-input p-float-label ">
+          <p-multiSelect
+            id="categorie"
+            [options]="categories"
+            formControlName="categories"
+            optionLabel="name">
+          </p-multiSelect>
+          <label class="text-medium mb-0" for="categorie">Choisissez une catégorie<span
+            class="required">*</span></label>
+        </span>
+            <span class="error"
+                  *ngIf="editForm.get('categories')?.touched && editForm.get('categories')?.errors?.['required']">
+          Ce champ est requis
+        </span>
+
+            <div class="add-input flex flex-column align-items-center justify-content-center">
+              <label class="text-medium">Date de fin des inscriptions<span class="required">*</span></label>
+              <p-calendar
+                class="text-medium mb-2 p-1"
+                placeholder="{{editForm.get('endOfRegistrationDate')?.value | date : 'dd/MM/yyyy'}}"
+                dateFormat="dd/mm/yy"
+                [minDate]="minDate"
+                [readonlyInput]="true"
+                [showIcon]="true"
+                formControlName="endOfRegistrationDate"></p-calendar>
+
+              <span class="error"
+                    *ngIf="editForm.get('endOfRegistrationDate')?.touched &&editForm.get('endOfRegistrationDate')?.errors?.['required']">Ce champ est requis</span>
+            </div>
+
+            <div class="mt-4 card flex align-items-center">
+              <p-inputSwitch formControlName="womenOnly" id="wo"></p-inputSwitch>
+              <label class="ml-2 text-xl " for="wo">Réserver aux femmes</label>
+            </div>
+          </div>
+
+          <div class="flex align-items-center justify-content-center m-3">
+            <button class="btn-dark text-xl " type="submit">Modifier le tournoi <img class="btn-icon" src="assets/img/icons/editer-blanc.png" alt=""></button>
+          </div>
+
+        </form>
+
+        <p-fieldset class="w-4 " legend="Tournoi">
+          <ul>
+            <li>Nombre total d'inscriptions : {{tournoiDetail.count}}</li>
+            <li>Possible de s'inscrire : {{tournoiDetail.canRegister ? '✔️' : '✖️'}}</li>
+            <li>Est inscrit : {{tournoiDetail.isRegistered ? '✔️' : '✖️'}}</li>
+            <li>Statut : {{tournoiDetail.status}}</li>
+            <li>Tour actuel : {{tournoiDetail.currentRound}}</li>
+          </ul>
+
+        </p-fieldset>
+      </div>
+
+
+      <div class="flex mt-3">
+        <p-fieldset class="m-1 " legend="Liste des joueurs" [toggleable]="true">
+          <ul *ngFor="let players of tournoiDetail.players">
+            <li>ID : {{players.id}}</li>
+            <li>Nom d'utilisateur : {{players.username}}</li>
+            <li>Email : {{players.email}}</li>
+            <li>Date de naissance : {{players.birthDate |date : 'dd/MM/yyyy'}}</li>
+            <li>Elo : {{players.elo}}</li>
+            <li>Genre : {{players.gender}}</li>
+            <li>Rôle : {{players.role}}</li>
+
+            <p-divider></p-divider>
+          </ul>
+          <li>Possible de démarrer : {{tournoiDetail.canStart ? '✔️' : '✖️'}}</li>
+          <li>Possible de valider le tour : {{tournoiDetail.canValidateRound ? '✔️' : '✖️'}}</li>
+        </p-fieldset>
+        <p-fieldset class="m-1 " legend="Liste des matchs" [toggleable]="true">
+          <ul *ngFor="let matches of tournoiDetail.matches">
+            <li class=" border-bottom-1 border-primary">Tour : {{matches.round}}</li>
+            <li>ID : {{matches.id}}</li>
+            <li>ID du tournoi : {{matches.tournamentId}}</li>
+            <li>Nom du joueur noir : {{matches.blackName}}</li>
+            <li>ID du joueur noir : {{matches.blackId}}</li>
+            <li>Nom du joueur blanc : {{matches.whiteName}}</li>
+            <li>ID du joueur blanc : {{matches.whiteId}}</li>
+            <li>Résultat : {{matches.result}}</li>
+
+            <p-divider></p-divider>
+          </ul>
+        </p-fieldset>
+      </div>
+    </div>
+  </div>
+</div>

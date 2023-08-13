@@ -5,10 +5,12 @@ import {TournoiService} from "../../services/tournoi.service";
 import {tap} from "rxjs";
 import {TournamentCategory} from "../../models/tournament";
 import {MessageService} from "primeng/api";
+import {checkNumber} from "../../validators/checkNumber";
 
 interface Category {
   name: string,
 }
+
 @Component({
   selector: 'app-add-tournament',
   templateUrl: './add-tournament.component.html',
@@ -21,7 +23,7 @@ export class AddTournamentComponent implements OnInit {
   categories! : Category[];
 
   minDate!: Date;
-  delayAdd : number = 3;
+  delayAdd : number = 5;
 
 
   constructor(private _fb: FormBuilder,
@@ -34,16 +36,20 @@ export class AddTournamentComponent implements OnInit {
     this.addForm = this._fb.group({
       name: [null, [Validators.required]],
       location: [null, ],
-      minPlayers: [null, [Validators.required]],
-      maxPlayers: [null, [Validators.required]],
+      minPlayers: [null, [Validators.required, Validators.min(2), Validators.max(16)]],
+      maxPlayers: [null, [Validators.required,Validators.min(2), Validators.max(16) ]],
       eloMin: [null,],
       eloMax: [null, ],
       categories: [[], [Validators.required]],
-      womenOnly: [false, [Validators.required]],
+      womenOnly: [false, ],
       endOfRegistrationDate: [null, [Validators.required]]
     }, {
+      validators : [
+        checkNumber('minPlayers', 'maxPlayers'),
+        checkNumber('eloMin', 'eloMax')
+      ],
       updateOn: 'blur',
-    })
+    });
 
     this.categories = [{name: TournamentCategory.Junior}, {name : TournamentCategory.Senior}, {name : TournamentCategory.Veteran} ]
 
@@ -52,7 +58,6 @@ export class AddTournamentComponent implements OnInit {
   }
 
   onSubmit() {
-
     const formValue = {
       ...this.addForm.value,
       categories: this.addForm.value.categories.map((obj:any) => obj.name)
@@ -69,6 +74,7 @@ export class AddTournamentComponent implements OnInit {
     this.minDate = new Date();
     this.minDate.setDate(this.minDate.getDate() + this.delayAdd)
   }
+
 
 
 }

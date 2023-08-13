@@ -17,6 +17,11 @@ import {SlideMenuModule} from "primeng/slidemenu";
 import {KeyFilterModule} from "primeng/keyfilter";
 import {MessagesModule} from "primeng/messages";
 import {MessageModule} from "primeng/message";
+import {MultiSelectModule} from "primeng/multiselect";
+import {CalendarModule} from "primeng/calendar";
+import {SelectButtonModule} from "primeng/selectbutton";
+import {CheckboxModule} from "primeng/checkbox";
+import {StepsModule} from "primeng/steps";
 
 @NgModule({
   exports: [
@@ -38,6 +43,11 @@ import {MessageModule} from "primeng/message";
     KeyFilterModule,
     MessagesModule,
     MessageModule,
+    MultiSelectModule,
+    CalendarModule,
+    SelectButtonModule,
+    CheckboxModule,
+    StepsModule,
   ]
 })
 export class PrimeNgModule {}

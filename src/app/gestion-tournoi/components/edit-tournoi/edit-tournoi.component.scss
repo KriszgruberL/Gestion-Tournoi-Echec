@@ -4,6 +4,17 @@ $lightpink: #FFECF1;
 $white: #FFFFFF;
 $darkpink: #a94a62;
 
+ul{
+  margin : 0;
+  padding : 0;
+}
+li {
+  padding : 0.2rem
+}
+
+:host ::ng-deep .p-fieldset{
+  background :  #FFECF1;
+}
 
 hr {
   border: none;
@@ -19,23 +30,18 @@ hr {
   width: 100% !important;
 }
 
-input {
-  background : $pink;
-}
-
-
 .bg-pink {
   background : $lightpink !important;
 }
 
 .add-input {
   width: 85% !important;
-  margin: 0rem 1rem 2rem;
+  margin-top : 2rem;
 }
 
 .add-number {
   width: 85% !important;
-  margin: 0rem 1rem 2rem;
+  margin-top : 3rem;
 }
 
 .add-text {
@@ -53,11 +59,10 @@ input {
 :host ::ng-deep p-calendar .p-component{
   background : $lightpink !important;
 }
+
 :host ::ng-deep .p-datepicker:not(.p-datepicker-inline) .p-datepicker-header{
   background : $darkpink !important;
-
 }
-
 
 :host ::ng-deep  .p-calendar-w-btn .p-datepicker-trigger{
   background : $pink !important;;
@@ -66,8 +71,6 @@ input {
 :host ::ng-deep .p-multiselect-trigger{
   background : $pink !important;
 }
-
-
 
 input{
   background : $lightpink !important;

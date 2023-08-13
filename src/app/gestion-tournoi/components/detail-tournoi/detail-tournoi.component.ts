@@ -1,8 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {TournamentDetailsDTO} from "../../models/tournament";
+import {TournamentCategory, TournamentDetailsDTO} from "../../models/tournament";
 import {TournoiService} from "../../services/tournoi.service";
-import {ActivatedRoute} from "@angular/router";
-import {Observable} from "rxjs";
+import {ActivatedRoute, Router} from "@angular/router";
+import {Observable, tap} from "rxjs";
+
+interface Category {
+  name: string,
+}
 
 @Component({
   selector: 'app-detail-tournoi',
@@ -13,16 +17,18 @@ export class DetailTournoiComponent implements OnInit{
 
   tournoiId : string;
   $tournoi!: Observable<TournamentDetailsDTO>;
+  categories! : Category[];
 
   constructor(private _tournoiService : TournoiService,
-              private _activeRoute : ActivatedRoute) {
+              private _activeRoute : ActivatedRoute,) {
     this.tournoiId = this._activeRoute.snapshot.params['id']
+
+    this.categories = [{name: TournamentCategory.Junior}, {name : TournamentCategory.Senior}, {name : TournamentCategory.Veteran} ]
+
   }
 
   ngOnInit(): void {
     this.$tournoi = this._tournoiService.getOne(this.tournoiId);
   }
-
-
 
 }

@@ -104,7 +104,21 @@ $white: #FFFFFF;
   margin : 1rem;
 }
 
+.btn {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.7rem 0.7rem 0;
+  border: none;
+  font-size: medium;
+  cursor: pointer;
 
+  display: flex;
+  align-items: stretch;
+  justify-content: space-evenly;
+
+  box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+
+}
 
 
 

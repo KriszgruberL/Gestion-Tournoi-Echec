@@ -8,18 +8,11 @@ import {LandingPageComponent} from './landing-page/landing-page.component';
 import {TournoiService} from "./services/tournoi.service";
 import {DetailTournoiComponent} from './components/detail-tournoi/detail-tournoi.component';
 import {HttpClientModule} from "@angular/common/http";
-import {ToastModule} from "primeng/toast";
-import {MenuModule} from "primeng/menu";
 import {MessageService} from "primeng/api";
-import {SlideMenuModule} from "primeng/slidemenu";
-import { AddTournamentComponent } from './components/add-tournament/add-tournament.component';
-import {KeyFilterModule} from "primeng/keyfilter";
-import {MultiSelectModule} from "primeng/multiselect";
-import {CalendarModule} from "primeng/calendar";
-import {SelectButtonModule} from "primeng/selectbutton";
-import {CheckboxModule} from "primeng/checkbox";
-import { MatchTournoiComponent } from './components/match-tournoi/match-tournoi.component';
-import {StepsModule} from "primeng/steps";
+import {AddTournamentComponent} from './components/add-tournament/add-tournament.component';
+import {MatchTournoiComponent} from './components/match-tournoi/match-tournoi.component';
+import {EditTournoiComponent} from './components/edit-tournoi/edit-tournoi.component';
+import {InputSwitchModule} from "primeng/inputswitch";
 
 
 @NgModule({
@@ -28,7 +21,8 @@ import {StepsModule} from "primeng/steps";
     LandingPageComponent,
     DetailTournoiComponent,
     AddTournamentComponent,
-    MatchTournoiComponent
+    MatchTournoiComponent,
+    EditTournoiComponent
   ],
   imports: [
     CommonModule,
@@ -36,11 +30,8 @@ import {StepsModule} from "primeng/steps";
     SharedModule,
     PrimeNgModule,
     HttpClientModule,
-    MultiSelectModule,
-    CalendarModule,
-    SelectButtonModule,
-    CheckboxModule,
-    StepsModule,
+    InputSwitchModule,
+
 
   ], exports : [
     ListTournoiComponent

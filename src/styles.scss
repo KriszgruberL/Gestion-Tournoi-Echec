@@ -5,6 +5,7 @@
 
 $dark: #1C3334;
 $pink: #DA7B93;
+$darkpink: #a94a62;
 $lightpink: #FFECF1;
 $white: #FFFFFF;
 
@@ -53,8 +54,8 @@ body {
   margin: 1rem auto;
   padding: 0.5rem 1rem;
 
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
 }
 
@@ -114,14 +115,15 @@ flex-center {
 
 .btn {
   margin: 0.5rem;
-  padding: 0.5rem 1rem;
+  padding: 1rem 1.5rem;
   border-radius: 0.7rem 0.7rem 0;
   border: none;
-  font-size: medium;
+  font-size: large;
+  font-weight : bold;
   cursor: pointer;
 
   display: flex;
-  align-items: stretch;
+  align-items: center;
   justify-content: space-evenly;
 
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
@@ -131,9 +133,9 @@ flex-center {
   }
 
   .btn-icon {
-    width: 1rem;
+    width: 1.5rem;
     padding: 0;
-    margin-left: 0.5rem
+    margin-left: 1rem;
   }
 
   &-dark {
@@ -167,6 +169,16 @@ flex-center {
       background: $pink;
     }
   }
-
-
 }
+
+.required {
+  color: #720000;
+  font-weight: bold;
+}
+
+.error {
+  font-style: italic;
+  color : $darkpink;
+  margin:  0.5rem;
+}
+

@@ -84,8 +84,10 @@ export class ListTournoiComponent implements OnInit {
   }
 
   deleteTournoi(id: string) {
-    this._tournoiService.deleteTournoi(id).subscribe();
-    this._router.navigateByUrl("/")
+    this._tournoiService.deleteTournoi(id).subscribe(
+      () => {this.$tournois = this.$tournois.filter((t) => t.id !== id);
+      }
+    )
   }
 
 
