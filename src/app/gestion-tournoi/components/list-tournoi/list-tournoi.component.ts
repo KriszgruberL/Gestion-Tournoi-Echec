@@ -2,18 +2,13 @@ import {Component, OnInit} from '@angular/core';
 
 import {PaginatorState} from "primeng/paginator";
 import {HttpClient} from "@angular/common/http";
-import {TournamentDTO} from "../../models/tournament";
+import {TournamentDetailsDTO, TournamentDTO} from "../../models/tournament";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../shared/services/auth.service";
 import {MenuItem, MessageService} from "primeng/api";
 import {TournoiService} from "../../services/tournoi.service";
 import {tap} from "rxjs";
-
-
-interface Column {
-  field: string;
-  header: string;
-}
+import {Column} from "../../../shared/models/utilities";
 
 @Component({
   selector: 'app-list-tournoi',
@@ -24,36 +19,51 @@ interface Column {
 export class ListTournoiComponent implements OnInit {
 
   $tournois!: TournamentDTO[];
+
+  // actualPlayers: number[] = []
+
   total: number = 0;
   cols!: Column[];
+
   filter: boolean = false;
+
   admin: boolean = false;
 
   constructor(private _tournoiService: TournoiService,
-              private _http: HttpClient,
-              private _router: Router,
               private _authService: AuthService,
               private messageService: MessageService) {
 
     let temp = localStorage.getItem('userConnected');
 
     if (temp) {
-      this._authService.$isAdmin().pipe(
-        tap(() => this.admin = true)
-      ).subscribe();
+      this._authService.$isAdmin().subscribe(admin => {
+        this.admin = admin === 'Admin';
+      });
     }
   }
 
   ngOnInit() {
-    this._tournoiService.getAllTournoi().subscribe(
-      (data) => {
+    this._tournoiService.getAllTournoi().subscribe({
+      next: (data) => {
         this.$tournois = data.results;
         this.total = data.total;
       },
-      (error) => {
+      error: error => {
         console.error('Error fetching data:', error);
       }
-    );
+    });
+
+    // this._tournoiService.getAllTournoiPlayers().subscribe({
+    //   next: (value : number ) => {
+    //     if(value && this.actualPlayers){
+    //       this.actualPlayers.push(value);
+    //     }
+    //   },
+    //   error : err => console.log(err)
+    //   }
+    // )
+    //   console.log(this.actualPlayers)
+
     // * Dynamic columns --------------------------------------------
     this.cols = [
       {field: 'name', header: 'Nom'},
@@ -85,9 +95,14 @@ export class ListTournoiComponent implements OnInit {
 
   deleteTournoi(id: string) {
     this._tournoiService.deleteTournoi(id).subscribe(
-      () => {this.$tournois = this.$tournois.filter((t) => t.id !== id);
+      () => {
+        this.$tournois = this.$tournois.filter((t) => t.id !== id);
       }
     )
+  }
+
+  inscriptionTournoi(id: string) {
+    this._tournoiService.inscriptionTournoi(id).subscribe()
   }
 
 

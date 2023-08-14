@@ -22,7 +22,7 @@ import {CalendarModule} from "primeng/calendar";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {CheckboxModule} from "primeng/checkbox";
 import {StepsModule} from "primeng/steps";
-import {InputSwitchModule} from "primeng/inputswitch";
+import {InputSwitch, InputSwitchModule} from "primeng/inputswitch";
 import {CascadeSelectModule} from "primeng/cascadeselect";
 
 @NgModule({

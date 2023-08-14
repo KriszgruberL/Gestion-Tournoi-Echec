@@ -33,6 +33,7 @@ import {CalendarModule} from "primeng/calendar";
         SharedModule,
         PrimeNgModule,
         HttpClientModule,
+        InputSwitchModule,
 
 
     ], exports: [

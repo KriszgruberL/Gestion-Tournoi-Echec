@@ -32,6 +32,7 @@ export interface TournamentDTO {
   status: TournamentStatus;
   currentRound: number;
 }
+
 export interface TournamentDetailsDTO {
   id: string;
   name: string;
@@ -48,7 +49,7 @@ export interface TournamentDetailsDTO {
   isRegistered: boolean;
   status: TournamentStatus;
   currentRound: number;
-  players?: UserDTO[];
+  players?: UserDTO[] ;
   canStart: boolean;
   canValidateRound: boolean;
   matches?: Match[];
