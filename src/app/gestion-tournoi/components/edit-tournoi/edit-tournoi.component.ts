@@ -5,10 +5,8 @@ import {TournoiService} from "../../services/tournoi.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {checkNumber} from "../../validators/checkNumber";
+import {Category} from "../../../shared/models/utilities";
 
-interface Category {
-  name: string,
-}
 
 @Component({
   selector: 'app-edit-tournoi',

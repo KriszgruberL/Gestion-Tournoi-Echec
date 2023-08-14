@@ -6,38 +6,42 @@ import {PrimeNgModule} from "../shared/prime-ng.module";
 import {GestionTournoiRoutingModule} from "./gestion-tournoi-routing.module";
 import {LandingPageComponent} from './landing-page/landing-page.component';
 import {TournoiService} from "./services/tournoi.service";
-import {DetailTournoiComponent} from './components/detail-tournoi/detail-tournoi.component';
 import {HttpClientModule} from "@angular/common/http";
 import {MessageService} from "primeng/api";
 import {AddTournamentComponent} from './components/add-tournament/add-tournament.component';
 import {MatchTournoiComponent} from './components/match-tournoi/match-tournoi.component';
 import {EditTournoiComponent} from './components/edit-tournoi/edit-tournoi.component';
 import {InputSwitchModule} from "primeng/inputswitch";
+import {AddMemberComponent} from "./members/add-member/add-member.component";
+import {CascadeSelectModule} from "primeng/cascadeselect";
+import {MembersService} from "./services/members.service";
+import {CalendarModule} from "primeng/calendar";
 
 
 @NgModule({
-  declarations: [
-    ListTournoiComponent,
-    LandingPageComponent,
-    DetailTournoiComponent,
-    AddTournamentComponent,
-    MatchTournoiComponent,
-    EditTournoiComponent
-  ],
-  imports: [
-    CommonModule,
-    GestionTournoiRoutingModule,
-    SharedModule,
-    PrimeNgModule,
-    HttpClientModule,
-    InputSwitchModule,
+    declarations: [
+        ListTournoiComponent,
+        LandingPageComponent,
+        AddTournamentComponent,
+        MatchTournoiComponent,
+        EditTournoiComponent,
+        AddMemberComponent
+    ],
+    imports: [
+        CommonModule,
+        GestionTournoiRoutingModule,
+        SharedModule,
+        PrimeNgModule,
+        HttpClientModule,
 
 
-  ], exports : [
-    ListTournoiComponent
-  ], providers : [
-    TournoiService,
-    MessageService
-  ]
+    ], exports: [
+        ListTournoiComponent
+    ], providers: [
+        MembersService,
+        TournoiService,
+        MessageService
+    ]
 })
-export class GestionTournoiModule { }
+export class GestionTournoiModule {
+}

@@ -48,7 +48,6 @@ export class AuthService {
   }
 
   $isAdmin() {
-    // return this._$auth.value?.user.role === 'Admin'
     return this._$auth.pipe(map(auth => auth?.user.role))
   }
 

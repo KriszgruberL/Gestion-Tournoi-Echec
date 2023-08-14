@@ -1,11 +1,11 @@
-import { NgModule } from '@angular/core';
-import { SidebarModule } from 'primeng/sidebar';
-import { ButtonModule } from 'primeng/button';
-import { TabMenuModule } from 'primeng/tabmenu';
-import { MegaMenuModule } from 'primeng/megamenu';
-import { ChipsModule } from 'primeng/chips';
-import { PasswordModule } from 'primeng/password';
-import { RippleModule } from 'primeng/ripple';
+import {NgModule} from '@angular/core';
+import {SidebarModule} from 'primeng/sidebar';
+import {ButtonModule} from 'primeng/button';
+import {TabMenuModule} from 'primeng/tabmenu';
+import {MegaMenuModule} from 'primeng/megamenu';
+import {ChipsModule} from 'primeng/chips';
+import {PasswordModule} from 'primeng/password';
+import {RippleModule} from 'primeng/ripple';
 import {CarouselModule} from "primeng/carousel";
 import {PaginatorModule} from "primeng/paginator";
 import {TableModule} from "primeng/table";
@@ -22,6 +22,8 @@ import {CalendarModule} from "primeng/calendar";
 import {SelectButtonModule} from "primeng/selectbutton";
 import {CheckboxModule} from "primeng/checkbox";
 import {StepsModule} from "primeng/steps";
+import {InputSwitchModule} from "primeng/inputswitch";
+import {CascadeSelectModule} from "primeng/cascadeselect";
 
 @NgModule({
   exports: [
@@ -44,10 +46,13 @@ import {StepsModule} from "primeng/steps";
     MessagesModule,
     MessageModule,
     MultiSelectModule,
-    CalendarModule,
     SelectButtonModule,
     CheckboxModule,
     StepsModule,
+    CascadeSelectModule,
+    CalendarModule,
+
   ]
 })
-export class PrimeNgModule {}
+export class PrimeNgModule {
+}

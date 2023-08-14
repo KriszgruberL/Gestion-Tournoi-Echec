@@ -6,10 +6,7 @@ import {tap} from "rxjs";
 import {TournamentCategory} from "../../models/tournament";
 import {MessageService} from "primeng/api";
 import {checkNumber} from "../../validators/checkNumber";
-
-interface Category {
-  name: string,
-}
+import {Category} from "../../../shared/models/utilities";
 
 @Component({
   selector: 'app-add-tournament',

@@ -1,0 +1,107 @@
+<div class="container">
+  <div class="main w-8  mb-4 p-3 border-round-lg">
+    <div class="flex w-full">
+      <button class="btn-dark flex justify-content-start" routerLink="/">Retour à l'accueil</button>
+    </div>
+  </div>
+
+  <div class="  main flex flex-row align-items-center w-8 bg-white mb-4 p-3 border-round-lg">
+
+    <div class="flex  w-6 justify-content-center ">
+      <form (submit)="onSubmit()" [formGroup]="addMemberForm">
+        <div class="flex align-items-center mb-5 flex-column">
+
+        <span class="input-box p-float-label mt-3">
+          <input
+            class="input-width mt-1"
+            id="username"
+            pInputText
+            formControlName="username"/>
+          <label class="text-medium mb-4" htmlFor="username">
+            Pseudo<span class="required">*</span>
+          </label>
+        </span>
+          <span
+            class="error"
+            *ngIf="
+            addMemberForm.get('username')?.touched &&
+            addMemberForm.get('username')?.errors?.['required']">
+          Ce champs est requis
+        </span>
+          <span
+            class="error mb-4"
+            *ngIf="
+            addMemberForm.get('username')?.touched &&
+            addMemberForm.get('username')?.errors?.['required']">
+          Cette valeur est déjà utilisée
+        </span>
+
+
+          <span class="input-box flex flex-row p-float-label">
+          <input
+            class="input-width"
+            id="email"
+            pInputText
+            formControlName="email"/>
+          <label class="text-medium mb-4" htmlFor="email">Email</label>
+        </span>
+          <span
+            class="error"
+            *ngIf="
+            addMemberForm.get('email')?.touched &&
+            addMemberForm.get('email')?.errors?.['required']">
+          Ce champs est requis
+        </span>
+          <span
+            class="error mb-4"
+            *ngIf="
+            addMemberForm.get('email')?.touched &&
+            addMemberForm.get('email')?.errors?.['required']">
+          Cette valeur est déjà utilisée
+        </span>
+
+
+          <span class="input-box p-float-label">
+            <input
+              class="input-width"
+              id="elo"
+              pInputText
+              pKeyFilter="int"
+              formControlName="elo"/>
+            <label class="text-medium mb-4" htmlFor="elo">Elo (0-3000)</label>
+          </span>
+
+          <div class="input-box flex flex-column align-items-center justify-content-center">
+            <label class="text-medium">Date de naissance<span class="required">*</span></label>
+            <p-calendar class="text-medium p-1" formControlName="birthDate" placeholder="dd-mm-yyyy"
+                        dateFormat="dd-mm-yy"></p-calendar>
+
+            <span class="error mb-4"
+                  *ngIf="addMemberForm.get('birthDate')?.touched &&addMemberForm.get('birthDate')?.errors?.['required']">
+		Ce champ est requis
+	</span>
+          </div>
+          <div class="input-box">
+            <p-dropdown class="mb-0" formControlName="gender" [options]="gender" optionLabel="name"  placeholder="Selectionner un genre"></p-dropdown>
+          </div>
+          <span class="error mb-4"
+                *ngIf="addMemberForm.get('gender')?.touched &&addMemberForm.get('gender')?.errors?.['required']">
+		Ce champ est requis
+	</span>
+
+          <div class="flex align-items-center justify-content-center m-3">
+            <button class="btn-medium " type="submit">
+              Enregistrer<img class="btn-icon" src="assets/img/icons/ajouter-un-utilisateur.png" alt=""/>
+            </button>
+          </div>
+
+
+        </div>
+      </form>
+    </div>
+    <div class="flex w-6 align-items-end">
+      <img class="w-11  flex align-content-end" src="assets/img/member-add.svg" alt="">
+    </div>
+
+  </div>
+</div>

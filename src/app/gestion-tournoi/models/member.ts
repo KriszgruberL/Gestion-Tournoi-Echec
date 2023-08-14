@@ -5,12 +5,19 @@ export interface Member {
   email: string
   birthDate: string
   elo: number
-  gender: string
+  gender: UserGender;
 }
+
 export interface MemberForm {
   username: string;
   email: string;
   birthDate: string;
   elo?: number | null;
   gender: UserGender;
+}
+
+export interface ChangePasswordDTO {
+  oldPassword? :string |null,
+  password?	: string |null,
+
 }

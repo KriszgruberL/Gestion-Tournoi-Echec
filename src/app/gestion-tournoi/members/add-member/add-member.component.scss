@@ -4,26 +4,22 @@ $lightpink: #FFECF1;
 $white: #FFFFFF;
 $darkpink: #a94a62;
 
+
 .bg-pink {
   background : $lightpink !important;
 }
 
-.add-input {
-  width: 85% !important;
-  margin: 0rem 1rem 2rem;
+.input-box {
+  width: 90% !important;
+  margin: 1.7rem 1rem 0.2rem;
 }
 
-.add-number {
-  width: 85% !important;
-  margin: 0rem 1rem 2rem;
-}
-
-.add-text {
+.input-width {
   width: 100%;
 }
 
-.number {
-  width: 100%;
+.error {
+  margin: 0 0 0.5rem;
 }
 
 input{
@@ -31,31 +27,26 @@ input{
 }
 
 
-:host ::ng-deep p-multiSelect {
-  width: 100% !important;
-
-}
-:host ::ng-deep .p-element .p-multiselect  {
-  width: 100% !important;
-}
-
-:host ::ng-deep p-multiselect .p-component{
-  background : $lightpink !important;
-}
-
 :host ::ng-deep p-calendar .p-component{
   background : $lightpink !important;
 }
 :host ::ng-deep .p-datepicker:not(.p-datepicker-inline) .p-datepicker-header{
   background : $darkpink !important;
-
 }
-
 
 :host ::ng-deep  .p-calendar-w-btn .p-datepicker-trigger{
   background : $pink !important;;
 }
 
-:host ::ng-deep .p-multiselect-trigger{
-  background : $pink !important;
+:host ::ng-deep :host ::ng-deep p-dropdown {
+  width : 80% !important;
+
 }
+:host ::ng-deep .p-dropdown {
+  background : $lightpink !important
+}
+
+:host ::ng-deep .p-dropdown .p-dropdown-trigger{
+  background : $pink !important
+}
+

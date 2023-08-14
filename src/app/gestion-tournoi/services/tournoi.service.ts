@@ -36,14 +36,13 @@ export class TournoiService {
     }
 
     addTournoi(addForm: TournamentAddDTO): Observable<TournamentAddDTO> {
-        return this._http.post<TournamentAddDTO>(`${this._urlTournament}`, addForm).pipe(
-            tap(() => (`TournoiService : ${console.log(addForm.name)})`))
+      return this._http.post<TournamentAddDTO>(`${this._urlTournament}`, addForm).pipe(
+          tap(() => (`TournoiService : ${console.log(addForm.name)})`))
         )
     }
 
     deleteTournoi(tournoiId: string) {
         return this._http.delete(`${this._urlTournament}/${tournoiId}`)
-
     }
 
 }
