@@ -2,13 +2,14 @@ import {Component, OnInit} from '@angular/core';
 
 import {PaginatorState} from "primeng/paginator";
 import {HttpClient} from "@angular/common/http";
-import {TournamentDetailsDTO, TournamentDTO} from "../../models/tournament";
+import {TournamentDetailsDTO, TournamentDTO, TournamentIndexDTO} from "../../models/tournament";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../shared/services/auth.service";
 import {MenuItem, MessageService} from "primeng/api";
 import {TournoiService} from "../../services/tournoi.service";
-import {tap} from "rxjs";
+import {map, tap} from "rxjs";
 import {Column} from "../../../shared/models/utilities";
+import {TokenDTO} from "../../../shared/models/user";
 
 @Component({
   selector: 'app-list-tournoi',
@@ -19,8 +20,8 @@ import {Column} from "../../../shared/models/utilities";
 export class ListTournoiComponent implements OnInit {
 
   $tournois!: TournamentDTO[];
-
-  // actualPlayers: number[] = []
+  actualPlayers: { [tournoiId: string]: number } = {};
+  isRegistered: { [tournoiId: string]: boolean } = {}
 
   total: number = 0;
   cols!: Column[];
@@ -28,41 +29,54 @@ export class ListTournoiComponent implements OnInit {
   filter: boolean = false;
 
   admin: boolean = false;
+  user!: TokenDTO;
 
   constructor(private _tournoiService: TournoiService,
               private _authService: AuthService,
-              private messageService: MessageService) {
+              private messageService: MessageService,
+              private _router: Router) {
 
-    let temp = localStorage.getItem('userConnected');
-
-    if (temp) {
-      this._authService.$isAdmin().subscribe(admin => {
-        this.admin = admin === 'Admin';
-      });
-    }
+    this.admin = localStorage.getItem('role') === 'Admin';
   }
 
   ngOnInit() {
+
     this._tournoiService.getAllTournoi().subscribe({
       next: (data) => {
         this.$tournois = data.results;
         this.total = data.total;
+
+        if (data.results.length > 0) {
+          for (const tournoi of this.$tournois) {
+            this._tournoiService.isRegistered(tournoi.id).subscribe((isRegistered) => {
+              this.isRegistered[tournoi.id] = isRegistered;
+            })
+
+            this._tournoiService.getActualPlayers(tournoi.id).subscribe({
+              next: (playerCount: number | undefined) => {
+                if (playerCount != null) {
+                  this.actualPlayers[tournoi.id] = playerCount;
+                  if (playerCount < tournoi.maxPlayers) {
+                    tournoi.canRegister = true;
+                  }
+                }
+                ;
+              }, error: err => console.log("getActualPlayers(tournoi.id) : ", err)
+            })
+          }
+        }
+
       },
       error: error => {
         console.error('Error fetching data:', error);
       }
     });
 
-    // this._tournoiService.getAllTournoiPlayers().subscribe({
-    //   next: (value : number ) => {
-    //     if(value && this.actualPlayers){
-    //       this.actualPlayers.push(value);
-    //     }
-    //   },
-    //   error : err => console.log(err)
-    //   }
-    // )
-    //   console.log(this.actualPlayers)
+    console.log("admin : ", this.admin)
+
+    if (this._authService.connectedUser) {
+      this.user = this._authService.connectedUser
+    }
 
     // * Dynamic columns --------------------------------------------
     this.cols = [
@@ -81,6 +95,7 @@ export class ListTournoiComponent implements OnInit {
   toggleFilter() {
     this.filter = !this.filter;
   }
+
 
   // * Paginator --------------------------------------------
   first: number = 0;
@@ -101,18 +116,46 @@ export class ListTournoiComponent implements OnInit {
     )
   }
 
-  inscriptionTournoi(id: string) {
-    this._tournoiService.inscriptionTournoi(id).subscribe()
+  register(id: string) {
+    console.log('tournoi id: ', id);
+
+    this._tournoiService.isRegistered(id).subscribe({
+      next: (isRegistered) => {
+        if (!isRegistered) {
+          this.inscriptionForTournament(id);
+        } else {
+          this.desinscriptionForTournament(id);
+        }
+      }
+    });
+  }
+
+  inscriptionForTournament(id: string) {
+    this.actualPlayers[id]++;
+    this._tournoiService.inscriptionTournoi(id, this.user).subscribe(() => {
+      this._tournoiService.isRegistered(id).subscribe((test) => {
+        this._tournoiService.setIsRegistered(id, test);
+      });
+    });
+  }
+
+  desinscriptionForTournament(id: string) {
+    this.actualPlayers[id]--;
+    this._tournoiService.desinscriptionTournoi(id).subscribe(() => {
+      this._tournoiService.isRegistered(id).subscribe((test) => {
+        this._tournoiService.setIsRegistered(id, test);
+      });
+    });
   }
 
 
-  // update() {
-  //   this.messageService.add({severity: 'success', summary: 'Success', detail: 'Data Updated'});
-  // }
-  //
-  // delete() {
-  //   this.messageService.add({severity: 'warn', summary: 'Delete', detail: 'Data Deleted'});
-  // }
+  startTournament(id: string) {
+    if (this._tournoiService.getOne(id).pipe(
+      map((t) => t.canStart)
+    ).subscribe()) {
+      this._tournoiService.startTournoi(id).subscribe();
+    }
+    console.log('start tournopi')
 
-
+  }
 }

@@ -31,6 +31,7 @@ export interface TournamentDTO {
   isRegistered: boolean;
   status: TournamentStatus;
   currentRound: number;
+
 }
 
 export interface TournamentDetailsDTO {

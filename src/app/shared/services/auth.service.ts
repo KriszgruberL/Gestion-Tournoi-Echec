@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {TokenDTO, UserDTO} from "../models/user";
+import {TokenDTO, UserDTO, UserRole} from "../models/user";
 import {BehaviorSubject, map, Observable, of, tap} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {FormGroup} from "@angular/forms";
@@ -13,7 +13,6 @@ export class AuthService {
   private _urlAPI = 'https://khun.somee.com/api'
   private _$isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private _$auth: BehaviorSubject<TokenDTO | undefined> = new BehaviorSubject<TokenDTO | undefined>(this.connectedUser);
-
 
   constructor(private _http: HttpClient,
               private _router: Router) {
@@ -39,16 +38,19 @@ export class AuthService {
   }
 
   set connectedUser(value: TokenDTO | undefined) {
-    if (value)
+    if (value){
       localStorage.setItem(this.AUTH_KEY, JSON.stringify(value))
-    else
+      localStorage.setItem('role', this.connectedUser?.user.role || '')
+    }
+    else{
       localStorage.removeItem(this.AUTH_KEY)
-
+      localStorage.removeItem('role')
+    }
     this._$auth.next(this.connectedUser)
   }
 
-  $isAdmin() {
-    return this._$auth.pipe(map(auth => auth?.user.role))
+  get isAdmin() {
+      return this._$auth.pipe(map (auth => auth?.user.role === 'Admin'))
   }
 
 
@@ -61,10 +63,10 @@ export class AuthService {
   }
 
   get isConnected() {
-    return !!this.connectedUser
+    return this.connectedUser
   }
 
-  get token(){
+  get token() {
     return this.connectedUser?.token
   }
 
@@ -76,11 +78,12 @@ export class AuthService {
       this._$auth.next(currentAuth);
     }
   }
+
   get $isLogged(): Observable<boolean> {
     return this._$isLogged.asObservable();
   }
 
-  set $isLogged(value: boolean){
+  set $isLogged(value: boolean) {
     this._$isLogged.next(value);
   }
 
@@ -91,4 +94,7 @@ export class AuthService {
 
     this._router.navigateByUrl('/home')
   }
+
+
 }
+

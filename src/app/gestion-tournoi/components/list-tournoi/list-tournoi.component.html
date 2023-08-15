@@ -36,7 +36,7 @@
       <section class="layout">
         <div *ngFor="let col of cols" class="header">{{ col.header }}</div>
 
-        <ng-container *ngFor="let tournoi of $tournois">
+        <ng-container *ngFor="let tournoi of $tournois ">
           <div class="grow1">{{ tournoi.name }}</div>
           <div class="grow1">{{ tournoi.location }}</div>
           <div class="grow1">{{ tournoi.eloMin }} - {{ tournoi.eloMax }}</div>
@@ -51,11 +51,33 @@
             <span *ngIf="tournoi.womenOnly"><img src="../../../../assets/img/icons/tick-mark-pink.png">️</span>
             <span *ngIf="!tournoi.womenOnly"><img src="../../../../assets/img/icons/remove-pink.png">️️</span>
           </div>
-          <div class="grow1">{{ tournoi.minPlayers }} / {{tournoi.maxPlayers}}</div>
-<!--          <div class="grow1">{{ actualPlayers }} / {{tournoi.maxPlayers}}</div>-->
+          <div class="grow1">{{ actualPlayers[tournoi.id] }} / {{tournoi.maxPlayers}}</div>
 
           <div class="grow1">
+                <a *ngIf="tournoi.canRegister && tournoi.status === 'WaitingForPlayers' ">
+                  <button *ngIf="!isRegistered" class="btn-round m-2" (click)=" register(tournoi.id)" >
+                    <img  class="btn-icon" src="assets/img/icons/sidentifier.png" title="S'incrire">
+                  </button>
+                  <button *ngIf="isRegistered" class="btn-round-light m-2" (click)=" register(tournoi.id)" >
+                    <img  class="btn-icon" src="assets/img/icons/partir.png" title="Se désinscrire">
+                  </button>
+                </a>
+
+                <a *ngIf="!tournoi.canRegister && tournoi.isRegistered" routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
+                </a>
+
+              <a *ngIf="!admin" routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
+                <p-button icon="pi pi-search"
+                          styleClass="p-button-rounded p-button-primary p-button-text p-button-raised"></p-button>
+              </a>
+
             <ng-container *ngIf="admin">
+              <a *ngIf="actualPlayers[tournoi.id] === tournoi.minPlayers">
+                <button class="btn-round" (click)="startTournament(tournoi.id)">
+                  <img  class="btn-icon" src="assets/img/icons/drapeau-darrivee.png" title="Démarrer le tournoi">
+                </button>
+              </a>
+
               <ul>
                 <li>
                   <button class="add btn" routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
@@ -74,12 +96,8 @@
                 </li>
               </ul>
             </ng-container>
-            <ng-container *ngIf="!admin">
-              <a routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
-                <p-button icon="pi pi-search" styleClass="p-button-rounded p-button-primary p-button-text p-button-raised"></p-button>
-              </a>
-            </ng-container>
           </div>
+
 
         </ng-container>
       </section>

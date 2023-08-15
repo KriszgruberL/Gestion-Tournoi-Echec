@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../shared/services/auth.service";
 import {Router} from "@angular/router";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {HeaderComponent} from "../header/header.component";
 
 
 @Component({
@@ -12,7 +13,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 export class LoginComponent {
 
   loginForm: FormGroup;
-  errorMessage : string = '';
+  errorMessage: string = '';
 
   constructor(private _authService: AuthService,
               private _router: Router,
@@ -30,7 +31,9 @@ export class LoginComponent {
       this._authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe({
         next: (response) => {
           console.log('Authentification réussie :', response);
+
           this._authService.$isLogged = true;
+          localStorage.setItem('role', this._authService.connectedUser?.user.role || '')
           this._router.navigateByUrl('/home');
         },
         error: (err) => {
@@ -38,7 +41,7 @@ export class LoginComponent {
           this.errorMessage = 'Échec de l\'authentification. Vérifiez vos informations.'
         },
         complete: () => {
-          // Code à exécuter une fois l'observable complet
+
         }
       });
     } else {

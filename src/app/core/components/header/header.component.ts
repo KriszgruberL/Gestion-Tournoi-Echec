@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../shared/services/auth.service";
-import {tap} from "rxjs";
+import {Observable, Subscription, tap} from "rxjs";
 import {MegaMenuItem} from "primeng/api";
 import {UserRole} from "../../../shared/models/user";
 
@@ -12,31 +12,24 @@ import {UserRole} from "../../../shared/models/user";
 })
 export class HeaderComponent implements OnInit {
   isLogged = false;
-  isAdmin: boolean = false;
+  isAdmin!: boolean;
   items: MegaMenuItem[] | undefined;
 
   constructor(private _authService: AuthService) {
     let temp = localStorage.getItem('userConnected');
+    this.isAdmin = localStorage.getItem('role') === 'Admin';
 
     if (temp) {
       this._authService.$isLogged.pipe(
         tap(() => this.isLogged = true)
       ).subscribe();
-      this._authService.$isAdmin().subscribe(admin => {
-        this.isAdmin = !!admin;
-      });
 
-      console.log(this.isAdmin)
+      console.log('header cmpt admin :', this.isAdmin)
     }
   }
 
 
   ngOnInit() {
-    this._authService.$isAdmin().subscribe(admin => {
-      this.isAdmin = admin === 'Admin';
-      this.updateMenuVisibility();
-    });
-
     this.items = [
       {
         label: 'Accueil',
@@ -68,6 +61,7 @@ export class HeaderComponent implements OnInit {
   }
 
   updateMenuVisibility(): void {
+    console.log('headerComponent.updateMenuVisibility();')
     if (this.items) {
       this.items.forEach((item) => {
         if (item.label === 'Ajouter un membre' || item.label === 'Ajouter un tournoi') {

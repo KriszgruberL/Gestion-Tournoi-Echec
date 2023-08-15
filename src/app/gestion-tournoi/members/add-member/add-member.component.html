@@ -73,8 +73,7 @@
 
           <div class="input-box flex flex-column align-items-center justify-content-center">
             <label class="text-medium">Date de naissance<span class="required">*</span></label>
-            <p-calendar class="text-medium p-1" formControlName="birthDate" placeholder="dd-mm-yyyy"
-                        dateFormat="dd-mm-yy"></p-calendar>
+            <p-calendar class="text-medium p-1" formControlName="birthDate" placeholder="dd-mm-yyyy"></p-calendar>
 
             <span class="error mb-4"
                   *ngIf="addMemberForm.get('birthDate')?.touched &&addMemberForm.get('birthDate')?.errors?.['required']">

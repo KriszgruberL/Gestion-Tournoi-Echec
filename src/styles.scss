@@ -138,6 +138,25 @@ flex-center {
     margin-left: 1rem;
   }
 
+  &-round{
+    @extend .btn;
+    background : $pink;
+    border-radius : 50%;
+    padding : 1rem;
+
+    &:hover {
+      background: $lightpink;
+    }
+
+    &-light{
+      @extend .btn-round;
+      background : $lightpink;
+      &:hover {
+        background: $pink;
+      }
+    }
+  }
+
   &-dark {
     @extend .btn;
     color: $lightpink;
