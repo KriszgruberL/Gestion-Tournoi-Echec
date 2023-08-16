@@ -117,8 +117,32 @@ $white: #FFFFFF;
   justify-content: space-evenly;
 
   box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.5);
+}
 
+.search {
+  background : #FFEAA8;
+  &:hover{
+  background : #FFFCD4;
+  }
+}
+.register {
+  background : #AEFCBE ;
+  &:hover{
+  background : #c5fdd1 ;
+  }
+}
+.unregister {
+  background : #FFC4CD ;
+  &:hover{
+  background : #fdd9e0 ;
+  }
+}
 
+.start {
+  background : #BDD2FF ;
+  &:hover{
+  background : #cedcfb;
+  }
 }
 
 

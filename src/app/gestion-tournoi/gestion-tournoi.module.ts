@@ -16,6 +16,7 @@ import {AddMemberComponent} from "./members/add-member/add-member.component";
 import {CascadeSelectModule} from "primeng/cascadeselect";
 import {MembersService} from "./services/members.service";
 import {CalendarModule} from "primeng/calendar";
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import {CalendarModule} from "primeng/calendar";
         PrimeNgModule,
         HttpClientModule,
         InputSwitchModule,
+        ProgressSpinnerModule,
 
 
     ], exports: [

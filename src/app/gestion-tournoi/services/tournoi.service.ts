@@ -1,26 +1,48 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {catchError, delay, interval, map, Observable, of, tap} from "rxjs";
+import {BehaviorSubject, catchError, delay, forkJoin, interval, map, Observable, of, switchMap, tap} from "rxjs";
 import {TournamentDetailsDTO, TournamentDTO, TournamentIndexDTO} from "../models/tournament";
 import {TournamentAddDTO} from "../models/tournament-add";
 import {Match} from "../models/match";
 import {AuthService} from "../../shared/services/auth.service";
-import {TokenDTO} from "../../shared/models/user";
+import {TokenDTO, UserDTO} from "../../shared/models/user";
 
 @Injectable()
 export class TournoiService {
 
   private _urlTournament = 'https://khun.somee.com/api/Tournament'
   private _urlTournamentInscription = 'https://khun.somee.com/api/TournamentInscription'
-
-  private _tournamentIsRegisteredMap: { [key: string]: boolean } = {};
+  private _$registered: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 
   constructor(private _http: HttpClient,
               private _authService: AuthService) {
   }
 
   getAllTournoi(): Observable<TournamentIndexDTO> {
-    return this._http.get<TournamentIndexDTO>(`${this._urlTournament}`)
+    return this._http.get<TournamentIndexDTO>(`${this._urlTournament}`).pipe(
+      switchMap((data) => {
+        if (this._authService.connectedUser) {
+          const connectedUserId = this._authService.connectedUser.user.id;
+          const tournamentRequests = data.results.map((tournament) =>
+            this.getOne(tournament.id).pipe(
+              map((tournamentDetails) => {
+                tournament.isRegistered = tournamentDetails.players?.some((player) => player.id === connectedUserId) ?? false;
+                return tournament;
+              })
+            )
+          );
+
+          return forkJoin(tournamentRequests).pipe(
+            map((updatedTournaments) => {
+              data.results = updatedTournaments;
+              return data;
+            })
+          );
+        } else {
+          return of(data);
+        }
+      })
+    );
   }
 
 
@@ -42,21 +64,49 @@ export class TournoiService {
     );
   }
 
-  isRegistered(tournoiId: string): Observable<boolean> {
-    if (this._tournamentIsRegisteredMap[tournoiId] !== undefined) {
-      return of(this._tournamentIsRegisteredMap[tournoiId]);
-    }
+  get $registered(): Observable<boolean> {
+    return this._$registered.asObservable()
+  }
 
-    return this.getOne(tournoiId).pipe(
-      map((t) => t.isRegistered || false),
-      catchError(() => of(false)),
-      tap((isRegistered) => (this._tournamentIsRegisteredMap[tournoiId] = isRegistered))
+  set $registered(value: boolean) {
+    this._$registered.next(value)
+  }
+
+  registerTournament(tournoiId: string): Observable<{ registered: boolean, players: UserDTO[] }> {
+    return this._http.post<boolean>(`${this._urlTournamentInscription}/${tournoiId}`, tournoiId).pipe(
+      switchMap((result) => {
+        this.$registered = result;
+        return this.updatePlayerList(tournoiId).pipe(
+          map((players) => ({ registered: result, players: players }))
+        );
+      })
     );
   }
 
-  // Setter for isRegistered property
-  setIsRegistered(tournoiId: string, isRegistered: boolean): void {
-    this._tournamentIsRegisteredMap[tournoiId] = isRegistered;
+  unregisterTournament(tournoiId: string) : Observable<{ registered: boolean, players: UserDTO[] }> {
+    return this._http.delete<boolean>(`${this._urlTournamentInscription}/${tournoiId}`).pipe(
+      switchMap((result) => {
+        this.$registered = result;
+        return this.updatePlayerList(tournoiId).pipe(
+          map((players) => ({ registered: result, players: players }))
+        );
+      })
+    );
+  }
+
+  updatePlayerList(tournoiId: string)  : Observable<UserDTO[]>{
+    return this.getOne(tournoiId).pipe(
+      map((tournamentDetails) => {
+        if (tournamentDetails && tournamentDetails.players) {
+          if (this._authService.connectedUser) {
+            tournamentDetails.players.push(this._authService.connectedUser.user);
+          }
+          return tournamentDetails.players;
+        }
+        return [];
+      }),
+      // ...
+    );
   }
 
   addTournoi(addForm: TournamentAddDTO): Observable<TournamentAddDTO> {
@@ -69,35 +119,8 @@ export class TournoiService {
     return this._http.delete(`${this._urlTournament}/${tournoiId}`)
   }
 
-  getActualPlayers(tournoiId: string) {
-    return this._http.get<TournamentDetailsDTO>(`${this._urlTournament}/${tournoiId}`).pipe(
-      map((t) => t.players?.length)
-    )
-  }
-
-  addPlayers(tournoiId: string) {
-    return this._http.get<TournamentDetailsDTO>(`${this._urlTournament}/${tournoiId}`).pipe(
-      map((t) => t.players?.length),
-      map((t) => typeof t === 'number' ? t++ : undefined)
-    )
-  }
-
-  inscriptionTournoi(tournoiId: string, user: TokenDTO) {
-    return this._http.post(`${this._urlTournamentInscription}/${tournoiId}`, user.user.id).pipe(
-      tap (() => this.setIsRegistered(tournoiId, true))
-    )
-
-  }
-
-  desinscriptionTournoi(tournoiId: string) {
-    return this._http.delete(`${this._urlTournamentInscription}/${tournoiId}`).pipe(
-      tap(() => {
-        this.setIsRegistered(tournoiId, false);
-      }))
-  }
-
-  startTournoi(tournoiId : string){
+  startTournoi(tournoiId: string) {
     return this._http.patch(`${(this._urlTournament)}/${tournoiId}/start`, tournoiId)
   }
-
 }
+

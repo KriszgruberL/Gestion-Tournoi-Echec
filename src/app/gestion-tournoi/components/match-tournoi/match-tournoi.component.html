@@ -4,6 +4,7 @@
       <button class="btn-dark flex justify-content-start" routerLink="/gestion-tournoi/list-tournoi">Retour à la liste des tournois</button>
     </div>
   </div>
+
     <div class="main w-10  mb-2  border-round-lg">
         <div class="p-card w-12 p-2 ">
             <p-toast></p-toast>
@@ -20,8 +21,6 @@
                     <div *ngFor="let col of cols" class="header">{{ col.header }}</div>
 
                     <ng-container *ngIf="$round | async as round">
-
-
                         <ng-container *ngFor="let r of round" >
                             <div class="grow1">1</div>
                             <div class="grow1">{{ r.whiteName | titlecase}}</div>

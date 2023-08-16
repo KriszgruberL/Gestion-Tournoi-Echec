@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 
 import {PaginatorState} from "primeng/paginator";
-import {HttpClient} from "@angular/common/http";
-import {TournamentDetailsDTO, TournamentDTO, TournamentIndexDTO} from "../../models/tournament";
+import {TournamentDTO} from "../../models/tournament";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../shared/services/auth.service";
-import {MenuItem, MessageService} from "primeng/api";
+import {MessageService} from "primeng/api";
 import {TournoiService} from "../../services/tournoi.service";
-import {map, tap} from "rxjs";
+import {map} from "rxjs";
 import {Column} from "../../../shared/models/utilities";
 import {TokenDTO} from "../../../shared/models/user";
 
@@ -20,8 +19,7 @@ import {TokenDTO} from "../../../shared/models/user";
 export class ListTournoiComponent implements OnInit {
 
   $tournois!: TournamentDTO[];
-  actualPlayers: { [tournoiId: string]: number } = {};
-  isRegistered: { [tournoiId: string]: boolean } = {}
+  isRegistered!: boolean;
 
   total: number = 0;
   cols!: Column[];
@@ -40,45 +38,26 @@ export class ListTournoiComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this._tournoiService.getAllTournoi().subscribe({
       next: (data) => {
         this.$tournois = data.results;
         this.total = data.total;
-
-        if (data.results.length > 0) {
-          for (const tournoi of this.$tournois) {
-            this._tournoiService.isRegistered(tournoi.id).subscribe((isRegistered) => {
-              this.isRegistered[tournoi.id] = isRegistered;
-            })
-
-            this._tournoiService.getActualPlayers(tournoi.id).subscribe({
-              next: (playerCount: number | undefined) => {
-                if (playerCount != null) {
-                  this.actualPlayers[tournoi.id] = playerCount;
-                  if (playerCount < tournoi.maxPlayers) {
-                    tournoi.canRegister = true;
-                  }
-                }
-                ;
-              }, error: err => console.log("getActualPlayers(tournoi.id) : ", err)
-            })
-          }
-        }
-
       },
       error: error => {
         console.error('Error fetching data:', error);
       }
     });
 
+    this._tournoiService.$registered.subscribe((value) => {
+      this.isRegistered = value
+    })
+
     console.log("admin : ", this.admin)
 
     if (this._authService.connectedUser) {
       this.user = this._authService.connectedUser
     }
-
-    // * Dynamic columns --------------------------------------------
+// * Dynamic columns --------------------------------------------
     this.cols = [
       {field: 'name', header: 'Nom'},
       {field: 'location', header: 'Lieu'},
@@ -96,6 +75,18 @@ export class ListTournoiComponent implements OnInit {
     this.filter = !this.filter;
   }
 
+  getStatus(result: string): string {
+    switch (result) {
+      case 'WaitingForPlayers' :
+        return 'En attente de joueurs'
+      case 'InProgress' :
+        return 'En cours'
+      case 'Closed' :
+        return 'Clos'
+      default :
+        return 'Error'
+    }
+  }
 
   // * Paginator --------------------------------------------
   first: number = 0;
@@ -117,45 +108,38 @@ export class ListTournoiComponent implements OnInit {
   }
 
   register(id: string) {
-    console.log('tournoi id: ', id);
+    console.log('register tournoi id: ', id);
 
-    this._tournoiService.isRegistered(id).subscribe({
-      next: (isRegistered) => {
-        if (!isRegistered) {
-          this.inscriptionForTournament(id);
-        } else {
-          this.desinscriptionForTournament(id);
-        }
-      }
+    this._tournoiService.registerTournament(id).subscribe({
+      next: (result) => {
+        this._tournoiService.$registered = result.registered;
+        this.ngOnInit()
+      },
+      error: (err) => console.log(err)
     });
+
   }
 
-  inscriptionForTournament(id: string) {
-    this.actualPlayers[id]++;
-    this._tournoiService.inscriptionTournoi(id, this.user).subscribe(() => {
-      this._tournoiService.isRegistered(id).subscribe((test) => {
-        this._tournoiService.setIsRegistered(id, test);
-      });
+  unregister(id: string) {
+    console.log('unregister tournoi id: ', id);
+
+    this._tournoiService.unregisterTournament(id).subscribe({
+      next: (result) => {
+        this._tournoiService.$registered = result.registered;
+        this.ngOnInit()
+      },
+      error: (err) => console.log(err)
     });
   }
-
-  desinscriptionForTournament(id: string) {
-    this.actualPlayers[id]--;
-    this._tournoiService.desinscriptionTournoi(id).subscribe(() => {
-      this._tournoiService.isRegistered(id).subscribe((test) => {
-        this._tournoiService.setIsRegistered(id, test);
-      });
-    });
-  }
-
 
   startTournament(id: string) {
     if (this._tournoiService.getOne(id).pipe(
       map((t) => t.canStart)
     ).subscribe()) {
       this._tournoiService.startTournoi(id).subscribe();
+      this.ngOnInit()
     }
-    console.log('start tournopi')
+    console.log('start tournoi')
 
   }
 }

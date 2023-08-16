@@ -1,111 +1,117 @@
-<div class="container">
-  <div class="main align-items-start w-10 bg-white p-3 border-round-lg">
+<div *ngIf="$tournois ; else loading">
+  <div class="container">
+    <div class="main align-items-start w-11 bg-white p-3 border-round-lg">
 
-    <div *ngIf="admin" class="option">
-      <button class="btn-medium" routerLink="/gestion-tournoi/add-tournoi">Ajouter<img class="btn-icon ml-2"
-                                                                                       src="../../../../assets/img/icons/icone-plus.png">
-      </button>
-    </div>
+<!--      <div *ngIf="admin" class="option">-->
+<!--        <button class="btn-medium" routerLink="/gestion-tournoi/add-tournoi">Ajouter<img class="btn-icon ml-2"-->
+<!--                                                                                         src="../../../../assets/img/icons/icone-plus.png">-->
+<!--        </button>-->
+<!--      </div>-->
 
-    <div class="option ">
-      <p-button icon="pi pi-filter" styleClass="p-button-rounded p-button-primary" (click)="toggleFilter()"></p-button>
+      <div class="option ">
+        <p-button icon="pi pi-filter" styleClass="p-button-rounded p-button-primary"
+                  (click)="toggleFilter()"></p-button>
 
-    </div>
-    <div *ngIf="filter">
-      <h2>ngfjfjfghjg</h2>
-    </div>
+      </div>
+      <div *ngIf="filter">
+        <h2>ngfjfjfghjg</h2>
+      </div>
 
-    <!--    <p-inplace closable="closable">-->
-    <!--      <ng-template pTemplate="display">-->
-    <!--        <span>View Content</span>-->
-    <!--      </ng-template>-->
-    <!--      <ng-template pTemplate="content">-->
-    <!--        <span>-->
-    <!--            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo-->
-    <!--            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.-->
-    <!--        </span>-->
-    <!--      </ng-template>-->
-    <!--    </p-inplace>-->
+      <!--    <p-inplace closable="closable">-->
+      <!--      <ng-template pTemplate="display">-->
+      <!--        <span>View Content</span>-->
+      <!--      </ng-template>-->
+      <!--      <ng-template pTemplate="content">-->
+      <!--        <span>-->
+      <!--            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo-->
+      <!--            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.-->
+      <!--        </span>-->
+      <!--      </ng-template>-->
+      <!--    </p-inplace>-->
 
-    <div class="w-12 card flex justify-content-center">
-      <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-                   [totalRecords]="total"></p-paginator>
-    </div>
+      <div class="w-12 card flex justify-content-center">
+        <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+                     [totalRecords]="total"></p-paginator>
+      </div>
 
-    <div class="scroll-bar border-round-lg flex justify-content-center align-items-center mb-2 mt-2">
-      <section class="layout">
-        <div *ngFor="let col of cols" class="header">{{ col.header }}</div>
+      <div class="scroll-bar border-round-lg flex justify-content-center align-items-center mb-2 mt-2">
+        <section class="layout">
+          <div *ngFor="let col of cols" class="header">{{ col.header }}</div>
 
-        <ng-container *ngFor="let tournoi of $tournois ">
-          <div class="grow1">{{ tournoi.name }}</div>
-          <div class="grow1">{{ tournoi.location }}</div>
-          <div class="grow1">{{ tournoi.eloMin }} - {{ tournoi.eloMax }}</div>
-          <div class="grow1">
-            <ul>
-              <li class="li" *ngFor="let cato of tournoi.categories">{{ cato }}</li>
-            </ul>
-          </div>
-          <div class="grow1">{{ tournoi.status }}</div>
-          <div class="grow1">{{ tournoi.endOfRegistrationDate |date : 'dd/MM/yyyy' }}</div>
-          <div class="grow1">
-            <span *ngIf="tournoi.womenOnly"><img src="../../../../assets/img/icons/tick-mark-pink.png">️</span>
-            <span *ngIf="!tournoi.womenOnly"><img src="../../../../assets/img/icons/remove-pink.png">️️</span>
-          </div>
-          <div class="grow1">{{ actualPlayers[tournoi.id] }} / {{tournoi.maxPlayers}}</div>
+          <ng-container *ngFor="let tournoi of $tournois ">
+            <div class="grow1">{{ tournoi.name }}</div>
+            <div class="grow1">{{ tournoi.location }}</div>
+            <div class="grow1">{{ tournoi.eloMin }} - {{ tournoi.eloMax }}</div>
+            <div class="grow1">
+              <ul>
+                <li class="li" *ngFor="let cato of tournoi.categories">{{ cato }}</li>
+              </ul>
+            </div>
+            <div class="grow1">{{getStatus(tournoi.status)}}</div>
+            <div class="grow1">{{ tournoi.endOfRegistrationDate |date : 'dd/MM/yyyy' }}</div>
+            <div class="grow1">
+              <span *ngIf="tournoi.womenOnly"><img src="../../../../assets/img/icons/tick-mark-pink.png">️</span>
+              <span *ngIf="!tournoi.womenOnly"><img src="../../../../assets/img/icons/remove-pink.png">️️</span>
+            </div>
+            <div class="grow1">{{ tournoi.count }} / {{tournoi.maxPlayers}}</div>
 
-          <div class="grow1">
-                <a *ngIf="tournoi.canRegister && tournoi.status === 'WaitingForPlayers' ">
-                  <button *ngIf="!isRegistered" class="btn-round m-2" (click)=" register(tournoi.id)" >
-                    <img  class="btn-icon" src="assets/img/icons/sidentifier.png" title="S'incrire">
-                  </button>
-                  <button *ngIf="isRegistered" class="btn-round-light m-2" (click)=" register(tournoi.id)" >
-                    <img  class="btn-icon" src="assets/img/icons/partir.png" title="Se désinscrire">
-                  </button>
-                </a>
-
-                <a *ngIf="!tournoi.canRegister && tournoi.isRegistered" routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
-                </a>
-
+            <div class="grow1 flex justify-content-start" [ngClass]="admin ? 'justify-content-end' : 'justify-content-start'">
+              <ng-container *ngIf="admin">
+                <button class="start btn-round" *ngIf="tournoi.count >= tournoi.minPlayers && tournoi.status === 'WaitingForPlayers'" (click)="startTournament(tournoi.id)">
+                  <img class="btn-icon" src="assets/img/icons/drapeau-darrivee.png" title="Démarrer le tournoi">
+                </button>
+              </ng-container>
               <a *ngIf="!admin" routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
-                <p-button icon="pi pi-search"
-                          styleClass="p-button-rounded p-button-primary p-button-text p-button-raised"></p-button>
+                <button class="search btn-round "><img class="btn-icon" src="assets/img/icons/loupe-noir.png" alt=""></button>
               </a>
-
-            <ng-container *ngIf="admin">
-              <a *ngIf="actualPlayers[tournoi.id] === tournoi.minPlayers">
-                <button class="btn-round" (click)="startTournament(tournoi.id)">
-                  <img  class="btn-icon" src="assets/img/icons/drapeau-darrivee.png" title="Démarrer le tournoi">
+              <a *ngIf="!tournoi.canRegister && tournoi.isRegistered"
+                 routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
+              </a>
+              <a *ngIf="tournoi.status === 'WaitingForPlayers' ">
+                <button class="add btn-round " *ngIf="!tournoi.isRegistered"  (click)="register(tournoi.id)">
+                  <img class="btn-icon" src="assets/img/icons/sidentifier.png" title="S'incrire">
+                </button>
+                <button *ngIf="tournoi.isRegistered" class="delete btn-round-light" (click)=" unregister(tournoi.id)">
+                  <img class="btn-icon" src="assets/img/icons/partir.png" title="Se désinscrire">
                 </button>
               </a>
 
-              <ul>
-                <li>
-                  <button class="add btn" routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
-                    <img class="btn-icon" src="assets/img/icons/loupe-noir.png" alt="">
-                  </button>
-                </li>
-                <li>
-                  <button class="edit btn" routerLink="/gestion-tournoi/edit-tournoi/{{tournoi.id}}">
-                    <img class="btn-icon" src="../../../../assets/img/icons/editer.png" alt="">
-                  </button>
-                </li>
-                <li>
-                  <button class="delete btn" (click)="deleteTournoi( tournoi.id  )">
-                    <img class="btn-icon" src="../../../../assets/img/icons/poubelle-de-recyclage.png" alt="">
-                  </button>
-                </li>
-              </ul>
-            </ng-container>
-          </div>
+              <ng-container *ngIf="admin">
+                <ul>
+                  <li>
+                    <button class="add btn" routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
+                      <img class="btn-icon" src="assets/img/icons/loupe-noir.png" alt="">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="edit btn" routerLink="/gestion-tournoi/edit-tournoi/{{tournoi.id}}">
+                      <img class="btn-icon" src="../../../../assets/img/icons/editer.png" alt="">
+                    </button>
+                  </li>
+                  <li>
+                    <button class="delete btn" (click)="deleteTournoi( tournoi.id  )">
+                      <img class="btn-icon" src="../../../../assets/img/icons/poubelle-de-recyclage.png" alt="">
+                    </button>
+                  </li>
+                </ul>
+              </ng-container>
+            </div>
+          </ng-container>
 
+        </section>
+      </div>
+      <div class="w-12 card flex justify-content-center mb-2">
+        <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+                     [totalRecords]="total"></p-paginator>
+      </div>
 
-        </ng-container>
-      </section>
-    </div>
-    <div class="w-12 card flex justify-content-center mb-2">
-      <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
-                   [totalRecords]="total"></p-paginator>
     </div>
   </div>
 </div>
+
+<ng-template #loading>
+  <div class="absolute top-0 left-0 h-full w-full bg-black-alpha-20 flex justify-content-center align-items-center">
+    <p-progressSpinner></p-progressSpinner>
+  </div>
+</ng-template>
 

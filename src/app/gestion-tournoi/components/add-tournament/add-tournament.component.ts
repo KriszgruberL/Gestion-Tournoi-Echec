@@ -59,7 +59,6 @@ export class AddTournamentComponent implements OnInit {
       ...this.addForm.value,
       categories: this.addForm.value.categories.map((obj:any) => obj.name)
     }
-
     console.log("Onsubmit ", formValue)
     this._tournoiService.addTournoi(formValue).pipe(
       tap(() => this._router.navigateByUrl('gestion-tournoi/list-tournoi'))

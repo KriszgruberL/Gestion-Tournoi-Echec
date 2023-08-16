@@ -15,6 +15,7 @@ export interface TournamentIndexDTO {
   total: number;
   results: TournamentDTO[];
 }
+
 export interface TournamentDTO {
   id: string;
   name: string;
@@ -26,12 +27,11 @@ export interface TournamentDTO {
   categories?: TournamentCategory[]; // Nullable categories
   womenOnly: boolean;
   endOfRegistrationDate: string;
-  count: number;
+  count: number; //number of player
   canRegister: boolean;
   isRegistered: boolean;
   status: TournamentStatus;
   currentRound: number;
-
 }
 
 export interface TournamentDetailsDTO {

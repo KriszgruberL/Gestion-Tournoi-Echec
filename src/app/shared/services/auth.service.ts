@@ -53,7 +53,6 @@ export class AuthService {
       return this._$auth.pipe(map (auth => auth?.user.role === 'Admin'))
   }
 
-
   get token$() {
     return this._$auth.pipe(map(auth => auth?.token))
   }
