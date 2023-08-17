@@ -35,8 +35,8 @@ export class AddMemberComponent implements OnInit {
   ngOnInit() {
 
     this.addMemberForm = this._fb.group({
-      username:new FormControl(null, [Validators.required],[isUsername(this._memberService)]),
-      email: new FormControl(null, [Validators.required], [isEmail(this._memberService)]),
+      username: [null, [Validators.required], [isUsername(this._memberService)]],
+      email: [null, [Validators.required], [isEmail(this._memberService)]],
       elo: [null,],
       birthDate: [null, [Validators.required]],
       gender: [null, [Validators.required]]
@@ -58,48 +58,24 @@ export class AddMemberComponent implements OnInit {
         gender: this.addMemberForm.value.gender.name
       }
 
-      if (this.isUsername(this.addMemberForm) && this.isEmail(this.addMemberForm)) {
-        console.log("Onsubmit AddMember ", formValue)
-        this._memberService.addMember(formValue).subscribe({
-            next: () => {
-              this._router.navigateByUrl('/')
-            },
-            error: err => {
+      console.log("Onsubmit AddMember ", formValue)
+      this._memberService.addMember(formValue).subscribe({
+          next: () => {
+            this._router.navigateByUrl('/')
+          },
 
-            }
-          }
-        )
-
-      }
-
+        }
+      )
     }
   }
-
-  isEmail(control: AbstractControl): Observable<ValidationErrors | null> {
-    console.log('fonctionne')
-    return this._memberService.existEmail(control.value).pipe(
-      tap( console.log ),
-      map(() => null),
-      catchError( err => of({emailExists: err}) )
-    );
-  }
-
-  isUsername(control: AbstractControl): Observable<ValidationErrors | null> {
-    return this._memberService.existUsername(control.value).pipe(
-      tap( console.log ),
-      map(() => null),
-      catchError( err => of({usernameExists: err}) )
-    );
-  }
-
 }
 
 function isEmail(service: MembersService): AsyncValidatorFn {
   return (control) => {
     return service.existEmail(control.value).pipe(
-      tap( console.log ),
-      map(() => null),
-      catchError( err => of({emailExists: err}) )
+      tap(console.log),
+      map(() => ({emailExists: 'err'})),
+      catchError(err => of(null))
     );
   }
 }
@@ -107,9 +83,9 @@ function isEmail(service: MembersService): AsyncValidatorFn {
 function isUsername(service: MembersService): AsyncValidatorFn {
   return (control) => {
     return service.existUsername(control.value).pipe(
-      tap( console.log ),
-      map(() => null),
-      catchError( err => of({usernameExists: err}) )
+      tap(console.log),
+      map(() => ({usernameExists: 'err'})),
+      catchError(err => of(null))
     );
   }
 }

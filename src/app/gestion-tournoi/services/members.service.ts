@@ -30,22 +30,12 @@ export class MembersService {
     )
   }
 
-  existEmail (availableEmail : UserDTO)  {
-    const headers = new HttpHeaders({
-      [availableEmail.email]: availableEmail.email,
-      [availableEmail.id]: availableEmail.id,
-    });
-
-    return this._http.head<boolean>(`${this._urlTournament}/existsEmail`, { headers });
+  existUsername (username: string)  {
+    return this._http.head<null>(`${this._urlTournament}/existsUsername?username=${username}`);
   }
 
-  existUsername (availableUsername : UserDTO)  {
-    const headers = new HttpHeaders({
-      [availableUsername.username]: availableUsername.username,
-      [availableUsername.id]: availableUsername.id,
-    });
-
-    return this._http.head<boolean>(`${this._urlTournament}/existsUsername`, { headers });
+  existEmail (email: string)  {
+    return this._http.head<null>(`${this._urlTournament}/existsEmail?email=${email}`);
   }
 
 
