@@ -2,7 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../../../shared/services/auth.service";
 import {Observable, Subscription, tap} from "rxjs";
 import {MegaMenuItem} from "primeng/api";
-import {UserRole} from "../../../shared/models/user";
+import {TokenDTO, UserRole} from "../../../shared/models/user";
 
 
 @Component({
@@ -15,21 +15,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isAdmin!: boolean;
   items: MegaMenuItem[] | undefined;
 
+  user : TokenDTO | undefined;
+
   sidebarVisible: boolean = false;
   subscription$$!: Subscription;
 
   constructor(private _authService: AuthService) {
       this.subscription$$ = this._authService.connectedUser$.subscribe((user) => {
-        console.log('auth:', user)
         this.isLogged = user !== undefined;
         this.isAdmin = this.isLogged ? user?.user.role === 'Admin' : false
         this.updateMenuVisibility()
       });
+
     //
     // }
   }
 
   ngOnInit() {
+
     this.items = [
       {
         label: 'Accueil',
@@ -57,6 +60,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         visible: this.isAdmin
       }
     ]
+
+    console.log('this.isLogged', this.isLogged)
+    console.log('isAdmin' , this.isAdmin)
+    console.log('items', this.items)
 
   }
 

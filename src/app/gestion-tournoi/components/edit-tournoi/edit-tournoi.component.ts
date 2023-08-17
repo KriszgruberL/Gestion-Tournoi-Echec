@@ -31,8 +31,6 @@ export class EditTournoiComponent implements OnInit {
     this.tournoiId = this._activeRoute.snapshot.params['id']
 
     this.categories = [{name: TournamentCategory.Junior}, {name: TournamentCategory.Senior}, {name: TournamentCategory.Veteran}]
-
-
   }
 
   ngOnInit(): void {

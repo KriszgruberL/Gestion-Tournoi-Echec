@@ -13,10 +13,9 @@ import {MatchTournoiComponent} from './components/match-tournoi/match-tournoi.co
 import {EditTournoiComponent} from './components/edit-tournoi/edit-tournoi.component';
 import {InputSwitchModule} from "primeng/inputswitch";
 import {AddMemberComponent} from "./members/add-member/add-member.component";
-import {CascadeSelectModule} from "primeng/cascadeselect";
 import {MembersService} from "./services/members.service";
-import {CalendarModule} from "primeng/calendar";
 import {ProgressSpinnerModule} from "primeng/progressspinner";
+import {ChangePasswordComponent} from './members/change-password/change-password.component';
 
 
 @NgModule({
@@ -26,7 +25,8 @@ import {ProgressSpinnerModule} from "primeng/progressspinner";
         AddTournamentComponent,
         MatchTournoiComponent,
         EditTournoiComponent,
-        AddMemberComponent
+        AddMemberComponent,
+        ChangePasswordComponent
     ],
     imports: [
         CommonModule,

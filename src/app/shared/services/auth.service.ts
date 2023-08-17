@@ -12,23 +12,29 @@ export class AuthService {
 
   private _urlAPI = 'https://khun.somee.com/api'
   private _$isLogged: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private _$auth: BehaviorSubject<TokenDTO | undefined> = new BehaviorSubject<TokenDTO | undefined>(this.connectedUser);
+  private _$auth: BehaviorSubject<TokenDTO | undefined>
 
   constructor(private _http: HttpClient,
               private _router: Router) {
+    this._$auth= new BehaviorSubject<TokenDTO | undefined>(this.connectedUser);
   }
 
   login(username: string, password: string): Observable<TokenDTO> {
     return this._http.post<TokenDTO>(`${this._urlAPI}/login`, {username, password}).pipe(
-      tap((response: TokenDTO) => this.connectedUser = response)
+      tap((response: TokenDTO) => this.connectedUser = response),
     )
   }
 
   readonly AUTH_KEY = 'userConnected'
 
+  get connectedUser$(){
+    return this._$auth.asObservable()
+  }
   get connectedUser(): TokenDTO | undefined {
     const authString = localStorage.getItem(this.AUTH_KEY)
     return authString ? JSON.parse(authString) as TokenDTO : undefined
+    // return this._$auth.getValue()
+
   }
 
   set connectedUser(value: TokenDTO | undefined) {
@@ -59,9 +65,7 @@ export class AuthService {
     return this.connectedUser
   }
 
-  get connectedUser$(){
-    return this._$auth.asObservable()
-  }
+
   get token() {
     return this.connectedUser?.token
   }

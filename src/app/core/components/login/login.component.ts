@@ -30,7 +30,8 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this._authService.login(this.loginForm.value.username, this.loginForm.value.password).subscribe({
         next: (response) => {
-          console.log('Authentification réussie :', response);
+          console.log('Authentification réussie');
+          this._authService.connectedUser = response;
 
           this._authService.$isLogged = true;
           localStorage.setItem('role', this._authService.connectedUser?.user.role || '')

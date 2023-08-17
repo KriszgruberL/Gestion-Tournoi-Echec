@@ -10,7 +10,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'profil', component: ProfilComponent },
   { path: 'working-on-it', component: WorkingOnItComponent },
-  { path: 'working-on-it', component: WorkingOnItComponent },
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: '' },
 ];

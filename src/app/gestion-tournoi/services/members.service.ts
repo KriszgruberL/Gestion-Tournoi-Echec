@@ -20,7 +20,7 @@ export class MembersService {
     )
   }
 
-  getMember() : UserDTO | undefined{
+  getMember() : UserDTO | undefined {
     return this._authService.connectedUser?.user
   }
 

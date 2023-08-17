@@ -7,6 +7,8 @@ import {AddTournamentComponent} from "./components/add-tournament/add-tournament
 import {MatchTournoiComponent} from "./components/match-tournoi/match-tournoi.component";
 import {EditTournoiComponent} from "./components/edit-tournoi/edit-tournoi.component";
 import {AddMemberComponent} from "./members/add-member/add-member.component";
+import {ChangePasswordComponent} from "./members/change-password/change-password.component";
+
 
 
 const routes: Routes = [
@@ -15,6 +17,7 @@ const routes: Routes = [
   { path: 'match-tournoi/:id', component: MatchTournoiComponent },
   { path: 'add-tournoi', component: AddTournamentComponent },
   { path: 'members/add-member', component: AddMemberComponent },
+  { path: 'members/change-password', component: ChangePasswordComponent },
   { path: 'landing-page', component: LandingPageComponent },
 ];
 @NgModule({

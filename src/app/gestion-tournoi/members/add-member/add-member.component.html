@@ -32,7 +32,7 @@
             class="error mb-4"
             *ngIf="
             addMemberForm.get('username')?.touched &&
-            addMemberForm.get('username')?.errors?.['required']">
+            addMemberForm.get('username')?.errors?.['usernameExists']">
           Cette valeur est déjà utilisée
         </span>
 
@@ -56,7 +56,7 @@
             class="error mb-4"
             *ngIf="
             addMemberForm.get('email')?.touched &&
-            addMemberForm.get('email')?.errors?.['required']">
+            addMemberForm.get('email')?.errors?.['emailExists']">
           Cette valeur est déjà utilisée
         </span>
 
