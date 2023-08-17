@@ -33,7 +33,7 @@
             *ngIf="
             addMemberForm.get('username')?.touched &&
             addMemberForm.get('username')?.errors?.['usernameExists']">
-          Cette valeur est déjà utilisée
+          {{addMemberForm.get('username')?.errors?.['usernameExists']|json}}
         </span>
 
 

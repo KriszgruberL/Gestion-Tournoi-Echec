@@ -8,11 +8,10 @@ import {
   ValidationErrors,
   Validators
 } from "@angular/forms";
-import {UserDTO, UserGender} from "../../../shared/models/user";
+import {UserGender} from "../../../shared/models/user";
 import {catchError, map, Observable, of, tap} from "rxjs";
 import {MembersService} from "../../services/members.service";
 import {Router} from "@angular/router";
-import {checkNumber} from "../../validators/checkNumber";
 import {Category} from "../../../shared/models/utilities";
 
 @Component({
@@ -24,8 +23,6 @@ export class AddMemberComponent implements OnInit {
 
   gender!: Category[];
   addMemberForm!: FormGroup;
-  validMail!: boolean
-  validName!: boolean
 
   constructor(private _memberService: MembersService,
               private _router: Router,
@@ -37,7 +34,7 @@ export class AddMemberComponent implements OnInit {
     this.addMemberForm = this._fb.group({
       username:new FormControl(null, [Validators.required],[isUsername(this._memberService)]),
       email: new FormControl(null, [Validators.required], [isEmail(this._memberService)]),
-      elo: [null,],
+      elo: [null],
       birthDate: [null, [Validators.required]],
       gender: [null, [Validators.required]]
     }, {
@@ -52,52 +49,24 @@ export class AddMemberComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.addMemberForm)
     if (this.addMemberForm.valid) {
       const formValue = {
         ...this.addMemberForm.value,
         gender: this.addMemberForm.value.gender.name
       }
 
-      if (this.isUsername(this.addMemberForm) && this.isEmail(this.addMemberForm)) {
-        console.log("Onsubmit AddMember ", formValue)
-        this._memberService.addMember(formValue).subscribe({
-            next: () => {
-              this._router.navigateByUrl('/')
-            },
-            error: err => {
-
-            }
-          }
-        )
-
-      }
-
+      this._memberService.addMember(formValue)
+        .subscribe(() => this._router.navigateByUrl('/'))
     }
   }
-
-  isEmail(control: AbstractControl): Observable<ValidationErrors | null> {
-    console.log('fonctionne')
-    return this._memberService.existEmail(control.value).pipe(
-      tap( console.log ),
-      map(() => null),
-      catchError( err => of({emailExists: err}) )
-    );
-  }
-
-  isUsername(control: AbstractControl): Observable<ValidationErrors | null> {
-    return this._memberService.existUsername(control.value).pipe(
-      tap( console.log ),
-      map(() => null),
-      catchError( err => of({usernameExists: err}) )
-    );
-  }
-
 }
 
 function isEmail(service: MembersService): AsyncValidatorFn {
+  console.log("please")
   return (control) => {
+    console.log(control)
     return service.existEmail(control.value).pipe(
-      tap( console.log ),
       map(() => null),
       catchError( err => of({emailExists: err}) )
     );
@@ -106,10 +75,10 @@ function isEmail(service: MembersService): AsyncValidatorFn {
 
 function isUsername(service: MembersService): AsyncValidatorFn {
   return (control) => {
+    console.log(control)
     return service.existUsername(control.value).pipe(
-      tap( console.log ),
-      map(() => null),
-      catchError( err => of({usernameExists: err}) )
+      map(() => ({usernameExists: 'err'})),
+      catchError( err => of(null) )
     );
   }
 }
