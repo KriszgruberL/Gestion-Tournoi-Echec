@@ -8,7 +8,8 @@ import {WorkingOnItComponent} from "./shared/components/working-on-it/working-on
 const routes: Routes = [
   { path: 'gestion-tournoi', loadChildren: () => import('./gestion-tournoi/gestion-tournoi.module').then(m => m.GestionTournoiModule) },
   { path: 'login', component: LoginComponent },
-  // { path: 'profil', component: ProfilComponent },
+  { path: 'profil', component: ProfilComponent },
+  { path: 'working-on-it', component: WorkingOnItComponent },
   { path: 'working-on-it', component: WorkingOnItComponent },
   { path: '', component: HomeComponent },
   { path: '**', redirectTo: '' },

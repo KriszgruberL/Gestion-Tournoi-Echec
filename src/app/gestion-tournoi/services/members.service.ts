@@ -3,18 +3,25 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ChangePasswordDTO, Member, MemberForm} from "../models/member";
 import {Observable, tap} from "rxjs";
 import {UserDTO} from "../../shared/models/user";
+import {AuthService} from "../../shared/services/auth.service";
 
 @Injectable()
 export class MembersService {
 
-  constructor(private _http : HttpClient) { }
+  constructor(private _http : HttpClient,
+              private _authService : AuthService) { }
 
   private _urlTournament = 'https://khun.somee.com/api/Member'
+
 
   addMember (addMemberForm : MemberForm) : Observable<MemberForm>{
     return this._http.post<MemberForm>(`${this._urlTournament}`, addMemberForm).pipe(
       tap(() => (`addMember : ${console.log(addMemberForm)})`))
     )
+  }
+
+  getMember() : UserDTO | undefined{
+    return this._authService.connectedUser?.user
   }
 
   changePassword (passwordForm : ChangePasswordDTO) : Observable<ChangePasswordDTO>{

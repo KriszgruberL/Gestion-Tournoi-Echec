@@ -26,7 +26,6 @@ export class HeaderComponent implements OnInit {
         tap(() => this.isLogged = true)
       ).subscribe();
 
-      console.log('header cmpt admin :', this.isAdmin)
     }
   }
 

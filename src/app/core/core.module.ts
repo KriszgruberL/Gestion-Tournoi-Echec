@@ -7,6 +7,7 @@ import {LoginComponent} from './components/login/login.component';
 import {SharedModule} from '../shared/shared.module';
 import {DividerModule} from "primeng/divider";
 import {ProfilComponent} from './components/profil/profil.component';
+import {MembersService} from "../gestion-tournoi/services/members.service";
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import {ProfilComponent} from './components/profil/profil.component';
     HomeComponent,
     HeaderComponent,
 
-  ],
+  ], providers : [
+    MembersService
+  ]
 })
 export class CoreModule {
 }
