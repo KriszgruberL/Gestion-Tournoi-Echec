@@ -56,7 +56,7 @@
             <label class="text-medium mb-4" htmlFor="elo-max">Elo maximum (0-3000)</label>
           </span>
         </div>
-        <div *ngIf=" addForm.get('eloMax')?.dirty && addForm.get('eloMin')?.dirty && addForm.hasError('invalidNumber')" class="error">
+        <div *ngIf=" addForm.get('eloMax')?.dirty && addForm.get('eloMin')?.dirty && addForm.hasError('eloMinError')" class="error">
           L'ELO maximum doit être supérieur au minimum
         </div>
 
@@ -111,7 +111,7 @@
             </span>
           </div>
         </div>
-        <div *ngIf=" addForm.get('maxPlayers')?.dirty && addForm.get('minPlayers')?.dirty && addForm.hasError('invalidNumber')" class="error">
+        <div *ngIf=" addForm.get('maxPlayers')?.dirty && addForm.get('minPlayers')?.dirty && addForm.hasError('minPlayersError')" class="error">
             Le nombre joueur maximum doit être supérieur au minimum
         </div>
 

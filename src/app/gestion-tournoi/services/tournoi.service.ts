@@ -31,7 +31,6 @@ export class TournoiService {
               })
             )
           );
-
           return forkJoin(tournamentRequests).pipe(
             map((updatedTournaments) => {
               data.results = updatedTournaments;
@@ -105,7 +104,6 @@ export class TournoiService {
         }
         return [];
       }),
-      // ...
     );
   }
 
@@ -115,12 +113,16 @@ export class TournoiService {
     )
   }
 
-  deleteTournoi(tournoiId: string) {
-    return this._http.delete(`${this._urlTournament}/${tournoiId}`)
+  deleteTournoi(tournoiId: string) : Observable<TournamentDTO> {
+    return this._http.delete<TournamentDTO>(`${this._urlTournament}/${tournoiId}`)
   }
 
-  startTournoi(tournoiId: string) {
-    return this._http.patch(`${(this._urlTournament)}/${tournoiId}/start`, tournoiId)
+  startTournoi(tournoiId: string) : Observable<TournamentDTO>  {
+    return this._http.patch<TournamentDTO>(`${(this._urlTournament)}/${tournoiId}/start`, tournoiId)
+  }
+
+  nextRound(tournoiId : string) : Observable<TournamentDTO>{
+    return this._http.patch<TournamentDTO>(`${(this._urlTournament)}/${tournoiId}/nextRound`, tournoiId)
   }
 }
 

@@ -10,8 +10,9 @@ export function checkNumber(minControlName : string, maxControlName:string) : Va
       const maxValue = maxControl.value;
 
       if (minValue !== null && maxValue !== null && minValue > maxValue) {
-        maxControl.setErrors({ invalidNumber: true });
-        return { invalidNumber: true };
+        const error: { [key:string]: any} = {}
+        error[minControlName+'Error'] = true
+        return error;
       } else {
         maxControl.setErrors(null);
       }

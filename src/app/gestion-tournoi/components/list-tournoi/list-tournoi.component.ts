@@ -133,13 +133,19 @@ export class ListTournoiComponent implements OnInit {
   }
 
   startTournament(id: string) {
-    if (this._tournoiService.getOne(id).pipe(
-      map((t) => t.canStart)
-    ).subscribe()) {
+    const temp = this._tournoiService.getOne(id).pipe(map((t) => t.canStart)).subscribe()
+    if (temp) {
       this._tournoiService.startTournoi(id).subscribe();
       this.ngOnInit()
     }
     console.log('start tournoi')
+  }
 
+  nextRound(id :  string) {
+    const temp = this._tournoiService.getOne(id).pipe(map(t => t.status === 'InProgress' && t.canValidateRound)).subscribe()
+    if(temp){
+      this._tournoiService.nextRound(id).subscribe();
+      this.ngOnInit()
+    }
   }
 }

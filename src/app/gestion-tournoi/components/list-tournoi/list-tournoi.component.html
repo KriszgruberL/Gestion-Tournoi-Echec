@@ -55,18 +55,22 @@
             </div>
             <div class="grow1">{{ tournoi.count }} / {{tournoi.maxPlayers}}</div>
 
+
             <div class="grow1 flex justify-content-start" [ngClass]="admin ? 'justify-content-end' : 'justify-content-start'">
               <ng-container *ngIf="admin">
-                <button class="start btn-round" *ngIf="tournoi.count >= tournoi.minPlayers && tournoi.status === 'WaitingForPlayers'" (click)="startTournament(tournoi.id)">
+                <button  class="start btn-round" *ngIf="tournoi.count >= tournoi.minPlayers && tournoi.status === 'WaitingForPlayers'" (click)="startTournament(tournoi.id)">
                   <img class="btn-icon" src="assets/img/icons/drapeau-darrivee.png" title="Démarrer le tournoi">
                 </button>
               </ng-container>
+
               <a *ngIf="!admin" routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
                 <button class="search btn-round "><img class="btn-icon" src="assets/img/icons/loupe-noir.png" alt=""></button>
               </a>
+
               <a *ngIf="!tournoi.canRegister && tournoi.isRegistered"
                  routerLink="/gestion-tournoi/match-tournoi/{{tournoi.id}}">
               </a>
+
               <a *ngIf="tournoi.status === 'WaitingForPlayers' ">
                 <button class="add btn-round " *ngIf="!tournoi.isRegistered"  (click)="register(tournoi.id)">
                   <img class="btn-icon" src="assets/img/icons/sidentifier.png" title="S'incrire">

@@ -15,6 +15,8 @@ export class HeaderComponent implements OnInit {
   isAdmin!: boolean;
   items: MegaMenuItem[] | undefined;
 
+  sidebarVisible: boolean = false;
+
   constructor(private _authService: AuthService) {
     let temp = localStorage.getItem('userConnected');
     this.isAdmin = localStorage.getItem('role') === 'Admin';
@@ -61,7 +63,6 @@ export class HeaderComponent implements OnInit {
   }
 
   updateMenuVisibility(): void {
-    console.log('headerComponent.updateMenuVisibility();')
     if (this.items) {
       this.items.forEach((item) => {
         if (item.label === 'Ajouter un membre' || item.label === 'Ajouter un tournoi') {
@@ -78,7 +79,7 @@ export class HeaderComponent implements OnInit {
     this.updateMenuVisibility()
   }
 
-  sidebarVisible: boolean = false;
+
 
   toggleSidebar() {
     this.sidebarVisible = !this.sidebarVisible;
