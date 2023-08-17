@@ -20,9 +20,7 @@ export class AuthService {
 
   login(username: string, password: string): Observable<TokenDTO> {
     return this._http.post<TokenDTO>(`${this._urlAPI}/login`, {username, password}).pipe(
-      tap((response: TokenDTO) => {
-        this.connectedUser = response
-      })
+      tap((response: TokenDTO) => this.connectedUser = response)
     )
   }
 
@@ -30,11 +28,7 @@ export class AuthService {
 
   get connectedUser(): TokenDTO | undefined {
     const authString = localStorage.getItem(this.AUTH_KEY)
-    if (authString) {
-      return JSON.parse(authString) as TokenDTO
-    } else {
-      return undefined
-    }
+    return authString ? JSON.parse(authString) as TokenDTO : undefined
   }
 
   set connectedUser(value: TokenDTO | undefined) {
@@ -65,8 +59,15 @@ export class AuthService {
     return this.connectedUser
   }
 
+  get connectedUser$(){
+    return this._$auth.asObservable()
+  }
   get token() {
     return this.connectedUser?.token
+  }
+
+  get role(){
+    return this.connectedUser?.user.role
   }
 
   set username(value: string) {

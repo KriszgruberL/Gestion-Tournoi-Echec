@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AuthService} from "../../../shared/services/auth.service";
 import {Observable, Subscription, tap} from "rxjs";
 import {MegaMenuItem} from "primeng/api";
@@ -10,25 +10,24 @@ import {UserRole} from "../../../shared/models/user";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   isLogged = false;
   isAdmin!: boolean;
   items: MegaMenuItem[] | undefined;
 
   sidebarVisible: boolean = false;
+  subscription$$!: Subscription;
 
   constructor(private _authService: AuthService) {
-    let temp = localStorage.getItem('userConnected');
-    this.isAdmin = localStorage.getItem('role') === 'Admin';
-
-    if (temp) {
-      this._authService.$isLogged.pipe(
-        tap(() => this.isLogged = true)
-      ).subscribe();
-
-    }
+      this.subscription$$ = this._authService.connectedUser$.subscribe((user) => {
+        console.log('auth:', user)
+        this.isLogged = user !== undefined;
+        this.isAdmin = this.isLogged ? user?.user.role === 'Admin' : false
+        this.updateMenuVisibility()
+      });
+    //
+    // }
   }
-
 
   ngOnInit() {
     this.items = [
@@ -61,6 +60,10 @@ export class HeaderComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this.subscription$$.unsubscribe()
+  }
+
   updateMenuVisibility(): void {
     if (this.items) {
       this.items.forEach((item) => {
@@ -73,11 +76,7 @@ export class HeaderComponent implements OnInit {
 
   onLogout() {
     this._authService.logout();
-    this.isLogged = false;
-    this.isAdmin = false;
-    this.updateMenuVisibility()
   }
-
 
 
   toggleSidebar() {
